@@ -1,0 +1,9 @@
+{
+  "name": "@visual-photo/copy",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./locales/en.json": "./locales/en.json"
+  }
+}
+

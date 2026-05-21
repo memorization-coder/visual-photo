@@ -1,0 +1,34 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@visual-photo/contracts": [
+        "../../packages/contracts/src/index.ts"
+      ],
+      "@visual-photo/domain": [
+        "../../packages/domain/src/index.ts"
+      ],
+      "@visual-photo/copy/*": [
+        "../../packages/copy/*"
+      ]
+    },
+    "incremental": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

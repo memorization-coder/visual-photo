@@ -1,0 +1,58 @@
+{
+  "app": {
+    "name": "Visual Photo",
+    "tagline": "Moments worth remembering."
+  },
+  "auth": {
+    "signInWithGoogle": "Sign in with Google",
+    "signInWithApple": "Sign in with Apple",
+    "loading": "Signing you in…"
+  },
+  "event": {
+    "create": {
+      "title": "Create an event",
+      "descriptionPlaceholder": "What should guests remember about this moment?"
+    },
+    "foundation": {
+      "title": "Permanent product foundation",
+      "description": "Shared contracts, domain rules, and backend contracts are ready before feature delivery."
+    }
+  },
+  "missions": {
+    "review": {
+      "title": "Review guided moments"
+    },
+    "guest": {
+      "takePhoto": "Take a photo",
+      "skip": "Skip for now"
+    }
+  },
+  "photo": {
+    "preview": {
+      "submit": "Submit moment"
+    }
+  },
+  "wall": {
+    "momentsPeopleLoved": "Moments people loved"
+  },
+  "settings": {
+    "logout": "Log out"
+  },
+  "foundation": {
+    "contracts": "Shared contracts",
+    "domain": "Domain rules",
+    "database": "Supabase contracts",
+    "i18n": "Internationalization-ready",
+    "adapters": "Platform adapters",
+    "contractsDescription": "Zod schemas and DTOs live in shared packages.",
+    "domainDescription": "Rules are reusable across clients and backend.",
+    "databaseDescription": "RPCs and RLS own durable product decisions.",
+    "i18nDescription": "Locale-aware copy starts from day one.",
+    "adaptersDescription": "Platform work is isolated behind adapter contracts."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "invalidImage": "This photo format is not supported.",
+    "missingEventContext": "We could not restore your event link."
+  }
+}

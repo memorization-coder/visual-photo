@@ -1,0 +1,44 @@
+import { z } from "zod";
+export declare const EventStatusSchema: z.ZodEnum<["draft", "published", "closed", "archived"]>;
+export declare const EventSchema: z.ZodObject<{
+    id: z.ZodString;
+    hostUserId: z.ZodString;
+    title: z.ZodString;
+    hostDescription: z.ZodOptional<z.ZodString>;
+    status: z.ZodEnum<["draft", "published", "closed", "archived"]>;
+    qrSlug: z.ZodString;
+    eventStartAt: z.ZodOptional<z.ZodString>;
+    eventEndAt: z.ZodOptional<z.ZodString>;
+    missionsLockedAt: z.ZodOptional<z.ZodString>;
+    firstMemorySubmittedAt: z.ZodOptional<z.ZodString>;
+    createdAt: z.ZodString;
+    updatedAt: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    status: "draft" | "published" | "closed" | "archived";
+    hostUserId: string;
+    title: string;
+    qrSlug: string;
+    hostDescription?: string | undefined;
+    eventStartAt?: string | undefined;
+    eventEndAt?: string | undefined;
+    missionsLockedAt?: string | undefined;
+    firstMemorySubmittedAt?: string | undefined;
+}, {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    status: "draft" | "published" | "closed" | "archived";
+    hostUserId: string;
+    title: string;
+    qrSlug: string;
+    hostDescription?: string | undefined;
+    eventStartAt?: string | undefined;
+    eventEndAt?: string | undefined;
+    missionsLockedAt?: string | undefined;
+    firstMemorySubmittedAt?: string | undefined;
+}>;
+export type EventStatus = z.infer<typeof EventStatusSchema>;
+export type Event = z.infer<typeof EventSchema>;

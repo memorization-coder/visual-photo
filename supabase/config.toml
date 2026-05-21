@@ -1,0 +1,17 @@
+project_id = "visual-photo"
+
+[api]
+enabled = true
+schemas = ["public"]
+extra_search_path = ["public"]
+max_rows = 1000
+
+[db]
+shadow_port = 54320
+
+[studio]
+enabled = true
+
+[functions.generate_memory_missions]
+verify_jwt = true
+
