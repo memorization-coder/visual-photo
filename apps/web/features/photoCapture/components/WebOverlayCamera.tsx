@@ -7,7 +7,6 @@ import { Button, Card, Stack, Text } from "@/components/primitives";
 type WebOverlayCameraProps = {
   mode: "live" | "preview";
   session?: LiveCameraSession;
-  eventLabel: string;
   missionPrompt: string;
   momentLabel: string;
   overlayLabel: string;
@@ -33,7 +32,6 @@ type WebOverlayCameraProps = {
 export function WebOverlayCamera({
   mode,
   session,
-  eventLabel,
   missionPrompt,
   momentLabel,
   overlayLabel,
@@ -107,13 +105,6 @@ export function WebOverlayCamera({
       onTouchEnd={(event) => handleTouchEnd(event.changedTouches[0]?.clientX ?? 0)}
     >
       <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-sm p-md">
-        <Text
-          as="p"
-          variant="labelSm"
-          className="max-w-[12rem] truncate rounded-full bg-[rgba(255,255,255,0.88)] px-sm py-xs text-[#1f1712]"
-        >
-          {eventLabel}
-        </Text>
         <Text as="p" variant="labelSm" className="rounded-full bg-[rgba(31,23,18,0.72)] px-sm py-xs text-white">
           {momentLabel}
         </Text>
@@ -125,8 +116,18 @@ export function WebOverlayCamera({
         ) : previewPhoto ? (
           <img src={previewPhoto.localUri} alt={missionPrompt} className="h-full w-full object-cover" />
         ) : null}
-        <div className="absolute inset-x-0 top-[4.5rem] px-md">
-          <Card variant="surface" className="bg-[rgba(252,248,242,0.94)]">
+        <div className="absolute inset-x-0 top-[4.5rem] z-10 flex items-center gap-sm px-md">
+          <Button
+            variant="outlined"
+            size="sm"
+            className="h-11 min-h-11 w-11 shrink-0 rounded-full border-white/40 bg-white/10 px-0 text-white hover:bg-white/20"
+            onClick={onNavigatePrevious}
+            disabled={!canNavigatePrevious}
+            aria-label={previousLabel}
+          >
+            <ChevronLeftIcon />
+          </Button>
+          <Card variant="surface" className="min-w-0 flex-1 bg-[rgba(252,248,242,0.94)]">
             <Stack gap="xs">
               <Text as="p" variant="labelSm" tone="muted">
                 {overlayLabel}
@@ -136,33 +137,20 @@ export function WebOverlayCamera({
               </Text>
             </Stack>
           </Card>
+          <Button
+            variant="outlined"
+            size="sm"
+            className="h-11 min-h-11 w-11 shrink-0 rounded-full border-white/40 bg-white/10 px-0 text-white hover:bg-white/20"
+            onClick={onNavigateNext}
+            disabled={!canNavigateNext}
+            aria-label={nextLabel}
+          >
+            <ChevronRightIcon />
+          </Button>
         </div>
         <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[rgba(31,23,18,0.88)] via-[rgba(31,23,18,0.52)] to-transparent px-md pb-lg pt-2xl">
           {mode === "live" ? (
-            <>
-              <div className="mb-md flex items-center justify-between gap-sm">
-                <Button
-                  variant="outlined"
-                  size="sm"
-                  className="h-11 min-h-11 w-11 rounded-full border-white/40 bg-white/10 px-0 text-white hover:bg-white/20"
-                  onClick={onNavigatePrevious}
-                  disabled={!canNavigatePrevious}
-                  aria-label={previousLabel}
-                >
-                  <ChevronLeftIcon />
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="sm"
-                  className="h-11 min-h-11 w-11 rounded-full border-white/40 bg-white/10 px-0 text-white hover:bg-white/20"
-                  onClick={onNavigateNext}
-                  disabled={!canNavigateNext}
-                  aria-label={nextLabel}
-                >
-                  <ChevronRightIcon />
-                </Button>
-              </div>
-              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-sm">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-sm">
                 <button
                   type="button"
                   aria-label={wallLabel}
@@ -190,7 +178,7 @@ export function WebOverlayCamera({
                   <Button
                     variant="outlined"
                     size="sm"
-                    className="h-11 min-h-11 w-11 rounded-full border-white/40 bg-white/10 px-0 text-white hover:bg-white/20"
+                    className="h-12 min-h-12 w-12 rounded-full border-white/40 bg-white/10 px-0 text-white hover:bg-white/20"
                     onClick={() => onFlipCamera(session?.facingMode === "environment" ? "user" : "environment")}
                     disabled={!session}
                     aria-label={flipLabel}
@@ -199,7 +187,6 @@ export function WebOverlayCamera({
                   </Button>
                 </div>
               </div>
-            </>
           ) : (
             <div className="grid grid-cols-1 gap-sm sm:grid-cols-3">
               <Button
@@ -242,11 +229,11 @@ function CameraIcon() {
 
 function FlipCameraIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current stroke-[1.8]">
-      <path d="M7 9 4.5 6.5 7 4" />
-      <path d="M17 15l2.5 2.5L17 20" />
-      <path d="M5 6.5h8a5 5 0 0 1 5 5" />
-      <path d="M19 17.5h-8a5 5 0 0 1-5-5" />
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6 fill-none stroke-current stroke-[1.9]">
+      <path d="M7.5 8.5 4.5 6l3-2.5" />
+      <path d="M16.5 15.5 19.5 18l-3 2.5" />
+      <path d="M5.5 6h8.2a4.8 4.8 0 0 1 4.8 4.8v.7" />
+      <path d="M18.5 18h-8.2a4.8 4.8 0 0 1-4.8-4.8v-.7" />
     </svg>
   );
 }

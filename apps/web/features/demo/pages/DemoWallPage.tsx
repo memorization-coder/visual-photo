@@ -40,15 +40,6 @@ export function DemoWallPage() {
     <>
       <div className="space-y-md">
         <section className="space-y-sm">
-          <div className="px-xs">
-            <Heading level={4}>{t("allMoments")}</Heading>
-            <Text tone="muted">
-              {selectedFilterMission
-                ? t("filteredMomentsDescription", { mission: selectedFilterMission.prompt })
-                : t("allMomentsDescription")}
-            </Text>
-          </div>
-
           <SurfaceCard className="space-y-md">
             <div className="flex items-center justify-between gap-md rounded-2xl bg-[#f6efe7] px-md py-md">
               <Stack gap="xs" className="min-w-0">

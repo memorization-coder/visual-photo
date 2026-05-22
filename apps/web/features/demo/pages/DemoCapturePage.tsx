@@ -206,7 +206,6 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
         <WebOverlayCamera
           mode={surfaceMode}
           session={session}
-          eventLabel={event.title}
           missionPrompt={currentMission.prompt}
           momentLabel={t("remainingLabel", {
             count: Math.max(0, missions.length - completedMissionIds.length)
