@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useDemoEventPrototype } from "../DemoEventPrototypeProvider";
 import { demoEventSlug } from "../demoData";
-import { buildEventMissionsPath, buildEventWallPath } from "@/lib/routes";
+import { buildEventPath, buildEventWallPath } from "@/lib/routes";
 import { SurfaceCard } from "../components/shared";
 
 type DemoSubmittedPageProps = {
@@ -30,7 +30,7 @@ export function DemoSubmittedPage({ locale }: DemoSubmittedPageProps) {
       <div className="grid grid-cols-1 gap-sm">
         {hasNextMission ? (
           <Link
-            href={buildEventMissionsPath(locale, demoEventSlug)}
+            href={buildEventPath(locale, demoEventSlug)}
             className="inline-flex min-h-11 items-center justify-center rounded-lg bg-accent px-lg py-sm text-sm font-medium text-white transition hover:opacity-95"
           >
             {t("nextMoment")}
@@ -43,10 +43,10 @@ export function DemoSubmittedPage({ locale }: DemoSubmittedPageProps) {
           {t("viewWall")}
         </Link>
         <Link
-          href={buildEventMissionsPath(locale, demoEventSlug)}
+          href={buildEventPath(locale, demoEventSlug)}
           className="inline-flex min-h-11 items-center justify-center rounded-lg bg-surface-muted px-lg py-sm text-sm font-medium text-text-primary transition hover:opacity-95"
         >
-          {t("reviewMoments")}
+          {t("returnToCamera")}
         </Link>
       </div>
     </SurfaceCard>

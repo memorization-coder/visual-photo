@@ -79,6 +79,7 @@ Production deployment is handled by `.github/workflows/ci-memory-hunt-web.yml`.
 - Pushes to `main` run CI only.
 - Vercel deploys Git changes after merge based on its Git integration.
 - Successful Vercel Preview deployments trigger `.github/workflows/vercel-preview-smoke.yml`.
+- Preview smoke checks validate the current camera-first guest entry and wall route.
 
 Required GitHub repository secrets:
 

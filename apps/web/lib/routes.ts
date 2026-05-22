@@ -6,10 +6,6 @@ export function buildEventPath(locale: string, qrSlug: string): string {
   return buildLocalizedPath(locale, `/e/${qrSlug}`);
 }
 
-export function buildEventMissionsPath(locale: string, qrSlug: string): string {
-  return buildLocalizedPath(locale, `/e/${qrSlug}/missions`);
-}
-
 export function buildEventCapturePath(locale: string, qrSlug: string, missionId: string): string {
   return buildLocalizedPath(locale, `/e/${qrSlug}/capture/${missionId}`);
 }

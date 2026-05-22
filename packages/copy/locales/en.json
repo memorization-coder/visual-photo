@@ -111,8 +111,7 @@
     "capture": {
       "openingTitle": "Opening camera",
       "openingBody": "Getting the live camera ready for this moment.",
-      "backToMoments": "Back",
-      "momentLabel": "Moment {current} of {total}",
+      "remainingLabel": "{count, plural, =0 {No moments left} one {# moment left} other {# moments left}}",
       "overlayLabel": "Guided moment",
       "wallShortcut": "Wall",
       "previousMoment": "Previous",
@@ -130,7 +129,7 @@
       "submitError": "That moment could not be submitted right now.",
       "missingMissionTitle": "That moment is not available.",
       "missingMissionBody": "Return to the moment list and choose another prompt.",
-      "backToMissions": "Back to moments"
+      "backToCamera": "Back to camera"
     },
     "preview": {
       "eyebrow": "Photo preview",
@@ -141,7 +140,7 @@
       "submit": "Submit moment",
       "missingTitle": "No draft photo is ready.",
       "missingBody": "Return to the moment list and start the capture flow again.",
-      "backToMoments": "Back to moments"
+      "backToCamera": "Back to camera"
     },
     "submitted": {
       "eyebrow": "Moment saved",
@@ -150,7 +149,7 @@
       "bodyWithMission": "Your photo for \"{mission}\" is now part of this prototype wall.",
       "nextMoment": "Next moment",
       "viewWall": "View wall",
-      "reviewMoments": "Review moments"
+      "returnToCamera": "Return to camera"
     },
     "wall": {
       "description": "A static wall that mixes seeded demo memories with anything you submit locally.",

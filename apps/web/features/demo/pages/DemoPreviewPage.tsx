@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button, Heading, Stack, Text } from "@/components/primitives";
-import { buildEventCapturePath, buildEventMissionsPath, buildEventSubmittedPath } from "@/lib/routes";
+import { buildEventCapturePath, buildEventPath, buildEventSubmittedPath } from "@/lib/routes";
 import { useDemoEventPrototype } from "../DemoEventPrototypeProvider";
 import { demoEventSlug } from "../demoData";
 import { EventHeader } from "../components/EventHeader";
@@ -27,12 +27,12 @@ export function DemoPreviewPage({ locale, missionId }: DemoPreviewPageProps) {
 
   if (!mission || !draftPhoto) {
     return (
-      <SurfaceCard className="space-y-md">
-        <Heading level={3}>{t("missingTitle")}</Heading>
-        <Text tone="muted">{t("missingBody")}</Text>
-        <Button href={buildEventMissionsPath(locale, demoEventSlug)}>{t("backToMoments")}</Button>
-      </SurfaceCard>
-    );
+        <SurfaceCard className="space-y-md">
+          <Heading level={3}>{t("missingTitle")}</Heading>
+          <Text tone="muted">{t("missingBody")}</Text>
+          <Button href={buildEventPath(locale, demoEventSlug)}>{t("backToCamera")}</Button>
+        </SurfaceCard>
+      );
   }
 
   const currentMission = mission;

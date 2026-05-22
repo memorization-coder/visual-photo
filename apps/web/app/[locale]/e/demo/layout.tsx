@@ -18,7 +18,7 @@ export default async function DemoEventLayout({ children, params }: DemoEventLay
       missions={demoMissions}
       seedMemories={demoSeedMemories}
     >
-      <DemoGuestShell locale={locale}>{children}</DemoGuestShell>
+      <DemoGuestShell>{children}</DemoGuestShell>
     </DemoEventPrototypeProvider>
   );
 }

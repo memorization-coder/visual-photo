@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { Button, Heading, Stack, Text } from "@/components/primitives";
 import { useDemoEventPrototype } from "../DemoEventPrototypeProvider";
 import { filterMemoriesByMission, findMemoryById, sortMissions } from "../demoSelectors";
-import { EventHeader } from "../components/EventHeader";
 import { MemoryLightbox } from "../components/MemoryLightbox";
 import { MemoryWallGrid } from "../components/MemoryWallGrid";
 import { SurfaceCard } from "../components/shared";
@@ -15,8 +14,7 @@ export function DemoWallPage() {
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | undefined>();
   const [selectedMissionId, setSelectedMissionId] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(false);
-  const { event, participant, missions, allMemories, toggleLove, getMemoryLoveCount, isLovedByCurrentUser } =
-    useDemoEventPrototype();
+  const { missions, allMemories, toggleLove, getMemoryLoveCount, isLovedByCurrentUser } = useDemoEventPrototype();
 
   const orderedMissions = useMemo(() => sortMissions(missions), [missions]);
   const filteredMemories = useMemo(
@@ -41,11 +39,6 @@ export function DemoWallPage() {
   return (
     <>
       <div className="space-y-md">
-        <SurfaceCard className="space-y-sm">
-          <EventHeader title={event.title} participantName={participant.displayName} />
-          <Text tone="muted">{t("description")}</Text>
-        </SurfaceCard>
-
         <section className="space-y-sm">
           <div className="px-xs">
             <Heading level={4}>{t("allMoments")}</Heading>

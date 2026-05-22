@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   buildEventCapturePath,
-  buildEventMissionsPath,
   buildEventPath,
   buildEventPreviewPath,
   buildEventSubmittedPath,
@@ -12,7 +11,6 @@ import {
 describe("route helpers", () => {
   it("builds localized event routes", () => {
     expect(buildEventPath("en", "demo")).toBe("/en/e/demo");
-    expect(buildEventMissionsPath("en", "demo")).toBe("/en/e/demo/missions");
     expect(buildEventCapturePath("en", "demo", "mission-1")).toBe("/en/e/demo/capture/mission-1");
     expect(buildEventPreviewPath("en", "demo", "mission-1")).toBe("/en/e/demo/preview/mission-1");
     expect(buildEventSubmittedPath("en", "demo")).toBe("/en/e/demo/submitted");

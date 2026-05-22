@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type { CameraFacingMode, LiveCameraSession } from "@/adapters/interfaces";
 import { Heading, Text } from "@/components/primitives";
-import { buildEventCapturePath, buildEventMissionsPath, buildEventPath, buildEventWallPath } from "@/lib/routes";
+import { buildEventCapturePath, buildEventPath, buildEventWallPath } from "@/lib/routes";
 import { useDemoEventPrototype } from "../DemoEventPrototypeProvider";
 import { demoEventSlug } from "../demoData";
 import { CameraFallbackUpload } from "@/features/photoCapture/components/CameraFallbackUpload";
@@ -130,8 +130,8 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
           stopLiveCamera(current);
         }
 
-          return undefined;
-        });
+        return undefined;
+      });
     };
   }, [mission, missionId, surfaceMode, isLiveCameraSupported, startLiveCamera, stopLiveCamera, t]);
 
@@ -141,10 +141,10 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
         <Heading level={3}>{t("missingMissionTitle")}</Heading>
         <Text tone="muted">{t("missingMissionBody")}</Text>
         <Link
-          href={buildEventMissionsPath(locale, demoEventSlug)}
+          href={buildEventPath(locale, demoEventSlug)}
           className="inline-flex min-h-11 items-center justify-center rounded-lg bg-accent px-lg py-sm text-sm font-medium text-white transition hover:opacity-95"
         >
-          {t("backToMissions")}
+          {t("backToCamera")}
         </Link>
       </SurfaceCard>
     );
@@ -208,9 +208,10 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
           session={session}
           eventLabel={event.title}
           missionPrompt={currentMission.prompt}
-          momentLabel={t("momentLabel", { current: currentMission.missionOrder + 1, total: missions.length })}
+          momentLabel={t("remainingLabel", {
+            count: Math.max(0, missions.length - completedMissionIds.length)
+          })}
           overlayLabel={t("overlayLabel")}
-          backLabel={t("backToMoments")}
           wallLabel={t("wallShortcut")}
           previousLabel={t("previousMoment")}
           nextLabel={t("nextMoment")}
@@ -221,7 +222,6 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
           previewPhoto={draftPhoto}
           canNavigatePrevious={Boolean(previousMissionId)}
           canNavigateNext={Boolean(nextMissionId)}
-          onBack={() => router.push(buildEventMissionsPath(locale, demoEventSlug))}
           onOpenWall={() => router.push(buildEventWallPath(locale, demoEventSlug))}
           onNavigatePrevious={() => {
             if (previousMissionId) {
