@@ -9,7 +9,7 @@
     "generate:contracts": "node scripts/generate-contract-docs.mjs",
     "check:primitives": "pnpm --filter @visual-photo/web run check:primitives",
     "ci": "pnpm check:all && pnpm test && pnpm build",
-    "typecheck": "pnpm -r typecheck",
+    "typecheck": "pnpm --filter @visual-photo/contracts build && pnpm -r typecheck",
     "test": "pnpm -r test",
     "lint": "pnpm -r lint"
   },
