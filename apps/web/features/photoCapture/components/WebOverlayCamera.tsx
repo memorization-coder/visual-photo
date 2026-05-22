@@ -1,0 +1,238 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import type { CameraFacingMode, CapturedPhoto, LiveCameraSession } from "@/adapters/interfaces";
+import { Button, Card, Stack, Text } from "@/components/primitives";
+
+type WebOverlayCameraProps = {
+  mode: "live" | "preview";
+  session?: LiveCameraSession;
+  eventLabel: string;
+  missionPrompt: string;
+  momentLabel: string;
+  overlayLabel: string;
+  backLabel: string;
+  wallLabel: string;
+  previousLabel: string;
+  nextLabel: string;
+  shutterLabel: string;
+  flipLabel: string;
+  retakeLabel: string;
+  submitLabel: string;
+  previewPhoto?: CapturedPhoto;
+  canNavigatePrevious: boolean;
+  canNavigateNext: boolean;
+  onBack: () => void;
+  onOpenWall: () => void;
+  onNavigatePrevious: () => void;
+  onNavigateNext: () => void;
+  onShutter: (videoElement: HTMLVideoElement) => void;
+  onFlipCamera: (nextFacingMode: CameraFacingMode) => void;
+  onRetake: () => void;
+  onSubmit: () => void;
+};
+
+export function WebOverlayCamera({
+  mode,
+  session,
+  eventLabel,
+  missionPrompt,
+  momentLabel,
+  overlayLabel,
+  backLabel,
+  wallLabel,
+  previousLabel,
+  nextLabel,
+  shutterLabel,
+  flipLabel,
+  retakeLabel,
+  submitLabel,
+  previewPhoto,
+  canNavigatePrevious,
+  canNavigateNext,
+  onBack,
+  onOpenWall,
+  onNavigatePrevious,
+  onNavigateNext,
+  onShutter,
+  onFlipCamera,
+  onRetake,
+  onSubmit
+}: WebOverlayCameraProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement || !session || mode !== "live") {
+      return;
+    }
+
+    videoElement.srcObject = session.stream;
+    void videoElement.play().catch(() => undefined);
+
+    return () => {
+      videoElement.pause();
+      videoElement.srcObject = null;
+    };
+  }, [mode, session]);
+
+  function handleTouchStart(clientX: number) {
+    touchStartXRef.current = clientX;
+  }
+
+  function handleTouchEnd(clientX: number) {
+    const startX = touchStartXRef.current;
+    touchStartXRef.current = null;
+
+    if (mode !== "live" || startX === null) {
+      return;
+    }
+
+    const deltaX = clientX - startX;
+    if (Math.abs(deltaX) < 48) {
+      return;
+    }
+
+    if (deltaX < 0 && canNavigateNext) {
+      onNavigateNext();
+      return;
+    }
+
+    if (deltaX > 0 && canNavigatePrevious) {
+      onNavigatePrevious();
+    }
+  }
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-[1.75rem] bg-[#1f1712] shadow-[0_28px_70px_rgba(31,23,18,0.34)]"
+      onTouchStart={(event) => handleTouchStart(event.changedTouches[0]?.clientX ?? 0)}
+      onTouchEnd={(event) => handleTouchEnd(event.changedTouches[0]?.clientX ?? 0)}
+    >
+      <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-sm p-md">
+        <Button variant="ghost" size="sm" className="rounded-full bg-[rgba(255,255,255,0.88)]" onClick={onBack}>
+          {backLabel}
+        </Button>
+        <div className="flex min-w-0 items-center gap-sm">
+          <Text
+            as="p"
+            variant="labelSm"
+            className="max-w-[10rem] truncate rounded-full bg-[rgba(255,255,255,0.88)] px-sm py-xs text-[#1f1712]"
+          >
+            {eventLabel}
+          </Text>
+          <Text as="p" variant="labelSm" className="rounded-full bg-[rgba(31,23,18,0.72)] px-sm py-xs text-white">
+            {momentLabel}
+          </Text>
+        </div>
+      </div>
+
+      <div className="relative aspect-[9/16] min-h-[34rem] bg-[#2d221c]">
+        {mode === "live" ? (
+          <video ref={videoRef} muted playsInline autoPlay className="h-full w-full object-cover" />
+        ) : previewPhoto ? (
+          <img src={previewPhoto.localUri} alt={missionPrompt} className="h-full w-full object-cover" />
+        ) : null}
+        <div className="absolute inset-x-0 top-[4.5rem] px-md">
+          <Card variant="surface" className="bg-[rgba(252,248,242,0.94)]">
+            <Stack gap="xs">
+              <Text as="p" variant="labelSm" tone="muted">
+                {overlayLabel}
+              </Text>
+              <Text as="p" variant="bodyLg">
+                {missionPrompt}
+              </Text>
+            </Stack>
+          </Card>
+        </div>
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[rgba(31,23,18,0.88)] via-[rgba(31,23,18,0.52)] to-transparent px-md pb-lg pt-2xl">
+          {mode === "live" ? (
+            <>
+              <div className="mb-md grid grid-cols-[auto_1fr_auto] items-center gap-sm">
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+                  onClick={onNavigatePrevious}
+                  disabled={!canNavigatePrevious}
+                >
+                  {previousLabel}
+                </Button>
+                <Text as="p" className="text-center text-sm text-white/90">
+                  {missionPrompt}
+                </Text>
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+                  onClick={onNavigateNext}
+                  disabled={!canNavigateNext}
+                >
+                  {nextLabel}
+                </Button>
+              </div>
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-sm">
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+                  onClick={onOpenWall}
+                >
+                  {wallLabel}
+                </Button>
+                <button
+                  type="button"
+                  aria-label={shutterLabel}
+                  onClick={() => {
+                    if (videoRef.current) {
+                      onShutter(videoRef.current);
+                    }
+                  }}
+                  className="inline-flex h-20 w-20 items-center justify-center rounded-full border-4 border-white bg-[rgba(255,255,255,0.18)] transition hover:bg-[rgba(255,255,255,0.28)]"
+                >
+                  <span className="h-14 w-14 rounded-full bg-white" />
+                </button>
+                <div className="flex justify-end">
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+                    onClick={() => onFlipCamera(session?.facingMode === "environment" ? "user" : "environment")}
+                    disabled={!session}
+                  >
+                    {flipLabel}
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="grid grid-cols-1 gap-sm sm:grid-cols-3">
+              <Button
+                variant="outlined"
+                className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+                onClick={onRetake}
+              >
+                {retakeLabel}
+              </Button>
+              <Button
+                variant="filled"
+                className="bg-white text-[#1f1712] hover:bg-white/90"
+                onClick={onSubmit}
+              >
+                {submitLabel}
+              </Button>
+              <Button
+                variant="outlined"
+                className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+                onClick={onOpenWall}
+              >
+                {wallLabel}
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

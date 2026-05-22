@@ -3,7 +3,27 @@ export function buildLocalizedPath(locale: string, path: string): string {
 }
 
 export function buildEventPath(locale: string, qrSlug: string): string {
-  return buildLocalizedPath(locale, `/events/${qrSlug}`);
+  return buildLocalizedPath(locale, `/e/${qrSlug}`);
+}
+
+export function buildEventMissionsPath(locale: string, qrSlug: string): string {
+  return buildLocalizedPath(locale, `/e/${qrSlug}/missions`);
+}
+
+export function buildEventCapturePath(locale: string, qrSlug: string, missionId: string): string {
+  return buildLocalizedPath(locale, `/e/${qrSlug}/capture/${missionId}`);
+}
+
+export function buildEventPreviewPath(locale: string, qrSlug: string, missionId: string): string {
+  return buildLocalizedPath(locale, `/e/${qrSlug}/preview/${missionId}`);
+}
+
+export function buildEventSubmittedPath(locale: string, qrSlug: string): string {
+  return buildLocalizedPath(locale, `/e/${qrSlug}/submitted`);
+}
+
+export function buildEventWallPath(locale: string, qrSlug: string): string {
+  return buildLocalizedPath(locale, `/e/${qrSlug}/wall`);
 }
 
 export function buildAuthRedirectTarget(params: {

@@ -4,6 +4,11 @@
   "packageManager": "pnpm@10.18.0",
   "scripts": {
     "build": "pnpm -r build",
+    "check:all": "pnpm check:contracts && pnpm check:primitives && pnpm lint && pnpm typecheck",
+    "check:contracts": "node scripts/check-contracts.mjs",
+    "generate:contracts": "node scripts/generate-contract-docs.mjs",
+    "check:primitives": "pnpm --filter @visual-photo/web run check:primitives",
+    "ci": "pnpm check:all && pnpm test && pnpm build",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "lint": "pnpm -r lint"

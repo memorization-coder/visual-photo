@@ -12,7 +12,7 @@ export class BrowserDeepLinkAdapter implements DeepLinkAdapter {
   }
 
   buildEventLink(qrSlug: string): string {
-    return new URL(`/en/events/${qrSlug}`, this.baseUrl).toString();
+    return new URL(`/en/e/${qrSlug}`, this.baseUrl).toString();
   }
 
   readEventSlug(url: string): string | null {
@@ -21,4 +21,3 @@ export class BrowserDeepLinkAdapter implements DeepLinkAdapter {
     return segments[2] ?? null;
   }
 }
-

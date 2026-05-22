@@ -7,6 +7,11 @@ Contract 0 establishes the permanent product foundation for Visual Photo as a mo
 - `apps/web`: Next.js web client foundation
 - `apps/ios`: placeholder for future iOS and App Clip client
 - `apps/android`: placeholder for future Android client
+- `docs/contracts`: product contracts, implementation intent, and Obsidian-friendly navigation
+- `docs/route-ownership.md`: route-to-contract ownership reference
+- `docs/contract-workflow.md`: how contracts are revised, activated, and archived
+- `docs/agent-rules.md`: implementation rules for contract-aware agents
+- `docs/implementation-status.md`: current repo alignment status for active contracts
 - `packages/contracts`: shared DTOs and Zod schemas
 - `packages/domain`: framework-agnostic business rules
 - `packages/copy`: locale files and shared copy
@@ -34,6 +39,7 @@ Never expose server-only variables to the browser. `.env.local` is intentionally
 - React should not decide mission completion, participant eligibility, memory visibility, or reaction permissions.
 - Multi-step product actions should flow through RPCs or Edge Functions rather than direct client writes to several tables.
 - Shared DTOs and domain rules must be reusable by future native clients.
+- Product behavior changes should align with active files in `docs/contracts/active`.
 
 ## Supabase Foundation
 
@@ -65,7 +71,41 @@ Before deployment:
 - photo upload is verified on a real phone browser
 - AI fallback behavior is exercised
 
+## GitHub Actions Deployment
+
+Production deployment is handled by `.github/workflows/ci-memory-hunt-web.yml`.
+
+- Pull requests to `main` run CI only.
+- Pushes to `main` run CI only.
+- Vercel deploys Git changes after merge based on its Git integration.
+- Successful Vercel Preview deployments trigger `.github/workflows/vercel-preview-smoke.yml`.
+
+Required GitHub repository secrets:
+
+- none for the CI workflow itself
+
+Required Vercel project setup:
+
+- Link this repository to a Vercel project for the web app.
+- Set the Vercel project Root Directory to `apps/web`.
+- Configure Preview environment variables in Vercel for:
+  - `NEXT_PUBLIC_SUPABASE_URL`
+  - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+  - `APP_BASE_URL`
+  - `SUPABASE_SERVICE_ROLE_KEY`
+  - `AI_API_KEY`
+- Configure Production environment variables in Vercel for:
+  - `NEXT_PUBLIC_SUPABASE_URL`
+  - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+  - `APP_BASE_URL`
+  - `SUPABASE_SERVICE_ROLE_KEY`
+  - `AI_API_KEY`
+- Keep Vercel Git deployments enabled.
+- Map Preview env vars to dev Supabase and Production env vars to prod Supabase.
+- In GitHub branch protection for `main`, require:
+  - `Memory Hunt Web CI / Contracts - Primitives - Lint - Typecheck - Test - Build`
+  - `Vercel Preview Smoke Test / Smoke Test Preview`
+
 ## Notes
 
 This workspace is scaffolded for `pnpm` workspaces. If `pnpm` is not installed locally, install or enable it before running the workspace scripts.
-

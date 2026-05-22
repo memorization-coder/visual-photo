@@ -1,0 +1,56 @@
+name: Vercel Preview Smoke Test
+
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: "Preview deployment URL to smoke test"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Smoke Test Preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'deployment_status' &&
+        github.event.deployment_status.state == 'success' &&
+        github.event.deployment.environment != 'production'
+      )
+    env:
+      PREVIEW_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.preview_url || github.event.deployment_status.environment_url }}
+
+    steps:
+      - name: Validate preview URL presence
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${PREVIEW_URL}"
+          echo "Testing preview URL: ${PREVIEW_URL}"
+
+      - name: Smoke test root and key routes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          fetch_and_assert() {
+            local path="$1"
+            local expect="$2"
+            local url="${PREVIEW_URL%/}${path}"
+
+            echo "Checking ${url}"
+            html="$(curl -fsSL --retry 3 --retry-all-errors "$url")"
+            echo "$html" | grep -F "$expect" >/dev/null
+          }
+
+          fetch_and_assert "/" "Visual Photo"
+          fetch_and_assert "/en" "Permanent product foundation"
+          fetch_and_assert "/en/e/demo" "Continue as guest"
+          fetch_and_assert "/en/host/events/demo" "Host event overview"

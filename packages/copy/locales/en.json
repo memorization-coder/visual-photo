@@ -6,7 +6,7 @@
   "auth": {
     "signInWithGoogle": "Sign in with Google",
     "signInWithApple": "Sign in with Apple",
-    "loading": "Signing you in…"
+    "loading": "Signing you in..."
   },
   "event": {
     "create": {
@@ -54,5 +54,144 @@
     "generic": "Something went wrong. Please try again.",
     "invalidImage": "This photo format is not supported.",
     "missingEventContext": "We could not restore your event link."
+  },
+  "demo": {
+    "nav": {
+      "event": "Event",
+      "missions": "Moments",
+      "wall": "Wall"
+    },
+    "entry": {
+      "eyebrow": "No app needed",
+      "title": "Scan the link, follow the moment, and capture something worth remembering.",
+      "body": "This static demo shows how guests move from a guided photo prompt into a simple camera flow.",
+      "promise": "Continue as a guest and try one guided moment at a time.",
+      "continue": "Continue as guest",
+      "continueAgain": "Continue to moments",
+      "viewWall": "View wall"
+    },
+    "event": {
+      "eyebrow": "Guest prototype",
+      "guestLabel": "Signed in as {name}",
+      "guestFallback": "Guest"
+    },
+    "progress": {
+      "current": "Moment {current} of {total}",
+      "completed": "{count} of {total} saved",
+      "allDone": "All moments completed"
+    },
+    "mission": {
+      "count": "Moment {current} of {total}",
+      "statusActive": "Ready",
+      "statusSkipped": "Skipped",
+      "statusCompleted": "Completed"
+    },
+    "guest": {
+      "takePhoto": "Take photo",
+      "viewWall": "View wall",
+      "reviewMoments": "Review moments"
+    },
+    "state": {
+      "redirectingBody": "Opening the next guided camera moment for this session.",
+      "title": "Every guided moment is already saved.",
+      "completeTitle": "You have finished every guided moment.",
+      "completeBody": "There is nothing left to capture in this demo session.",
+      "completeFollowUp": "Head to the wall to browse what is visible for this event.",
+      "viewWall": "Open wall",
+      "reviewWall": "Browse wall"
+    },
+    "missions": {
+      "descriptionTitle": "Revisit moments",
+      "description": "Use this page as a secondary review surface. The primary guest entry goes straight into the camera.",
+      "activeTitle": "Active moments",
+      "activeBody": "These incomplete prompts remain available in the guided flow.",
+      "completedTitle": "Completed moments",
+      "completedBody": "Already saved. These no longer appear in the active camera navigation."
+    },
+    "capture": {
+      "openingTitle": "Opening camera",
+      "openingBody": "Getting the live camera ready for this moment.",
+      "backToMoments": "Back",
+      "momentLabel": "Moment {current} of {total}",
+      "overlayLabel": "Guided moment",
+      "wallShortcut": "Wall",
+      "previousMoment": "Previous",
+      "nextMoment": "Next",
+      "shutter": "Capture photo",
+      "flipCamera": "Flip camera",
+      "retake": "Retake",
+      "submit": "Submit moment",
+      "retryCamera": "Try camera again",
+      "blockedTitle": "Camera access is required",
+      "permissionError": "This browser did not open the camera for the guided capture flow.",
+      "fallbackBody": "Allow camera access in your browser or site settings, then try again.",
+      "blockedHelp": "If camera access still fails on this device or browser, browse the wall here or use the native app instead. The site cannot restore permission automatically.",
+      "cameraCaptureError": "That photo could not be captured. Try again.",
+      "submitError": "That moment could not be submitted right now.",
+      "missingMissionTitle": "That moment is not available.",
+      "missingMissionBody": "Return to the moment list and choose another prompt.",
+      "backToMissions": "Back to moments"
+    },
+    "preview": {
+      "eyebrow": "Photo preview",
+      "previewAlt": "Selected photo preview",
+      "previewTitle": "Preview",
+      "defaultHint": "Make sure the moment feels right before you save it.",
+      "retake": "Retake",
+      "submit": "Submit moment",
+      "missingTitle": "No draft photo is ready.",
+      "missingBody": "Return to the moment list and start the capture flow again.",
+      "backToMoments": "Back to moments"
+    },
+    "submitted": {
+      "eyebrow": "Moment saved",
+      "title": "Moment saved",
+      "body": "Your photo is now part of this prototype wall.",
+      "bodyWithMission": "Your photo for \"{mission}\" is now part of this prototype wall.",
+      "nextMoment": "Next moment",
+      "viewWall": "View wall",
+      "reviewMoments": "Review moments"
+    },
+    "wall": {
+      "description": "A static wall that mixes seeded demo memories with anything you submit locally.",
+      "allMoments": "All moments",
+      "allMomentsDescription": "Every approved prototype memory for this event.",
+      "filteredMomentsDescription": "Showing photos for: {mission}",
+      "summaryLabel": "Wall view",
+      "visibleCount": "{count} photos visible",
+      "filteredVisibleCount": "{count} photos showing",
+      "filterLabel": "Mission filter",
+      "allMissions": "All missions",
+      "showFilters": "Show filters",
+      "hideFilters": "Hide filters",
+      "missionChip": "Moment {current}",
+      "emptyMissionFilter": "No photos have been submitted for this moment yet.",
+      "closePhoto": "Close photo",
+      "tapToExpand": "Tap to expand",
+      "heartCount": "♥ {count}",
+      "love": "Love ({count})",
+      "loved": "Loved ({count})"
+    },
+    "host": {
+      "eyebrow": "Host preview",
+      "overviewTitle": "Host event overview",
+      "overviewBody": "A relaxed baby birthday with close friends and family. Visual Photo turns that into guided prompts guests can follow without downloading an app.",
+      "missionsTitle": "Host mission management",
+      "missionsBody": "Future mission editing and review will land here after static guest behaviour is validated.",
+      "shareTitle": "Host sharing tools",
+      "shareBody": "This route stands in for the later sharing workflow and event distribution controls.",
+      "moderateTitle": "Host moderation queue",
+      "moderateBody": "This placeholder preserves the future moderation route without adding backend workflows yet.",
+      "viewGuestPrototype": "Open guest prototype",
+      "previewAsGuest": "Preview as guest",
+      "viewWall": "View wall",
+      "copyDemoLink": "Copy demo link",
+      "copiedLink": "Link copied",
+      "generatedMomentsTitle": "Generated photo moments",
+      "momentNumber": "Moment {current}",
+      "sharePanelTitle": "QR or link preview",
+      "sharePanelBody": "This stays fake for the demo, but it shows how a host would share one simple guest entry point.",
+      "fakeQrLabel": "Demo QR placeholder"
+    }
   }
 }
