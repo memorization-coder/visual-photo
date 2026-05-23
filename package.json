@@ -11,9 +11,11 @@
     "ci": "pnpm check:all && pnpm test && pnpm build",
     "typecheck": "pnpm --filter @visual-photo/contracts build && pnpm -r typecheck",
     "test": "pnpm -r test",
+    "test:e2e:host": "pnpm --filter @visual-photo/web run test:e2e",
     "lint": "pnpm -r lint"
   },
   "devDependencies": {
+    "@playwright/test": "^1.51.1",
     "@types/node": "^22.10.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

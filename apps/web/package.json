@@ -7,7 +7,8 @@
     "build": "next build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --root ../.. --config vitest.config.ts apps/web/tests",
-    "lint": "next lint",
+    "test:e2e": "playwright test --config ../../playwright.config.ts tests/e2e/hostDemo.spec.ts",
+    "lint": "next lint && node scripts/check-host-demo-i18n.mjs",
     "check:primitives": "node scripts/check-primitives.mjs"
   },
   "dependencies": {

@@ -27,7 +27,7 @@ type NativeButtonProps = CommonProps &
 
 function buttonClasses(variant: ButtonVariant, size: ButtonSize, className?: string) {
   return clsx(
-    "inline-flex items-center justify-center rounded-lg font-medium transition focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60",
+    "inline-flex items-center justify-center rounded-lg font-medium transition focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:shrink-0",
     size === "sm" && "min-h-10 px-md py-sm text-sm",
     size === "md" && "min-h-11 px-lg py-sm text-sm",
     size === "lg" && "min-h-12 px-lg py-md text-base",

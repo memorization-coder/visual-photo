@@ -22,6 +22,22 @@ export function buildEventWallPath(locale: string, qrSlug: string): string {
   return buildLocalizedPath(locale, `/e/${qrSlug}/wall`);
 }
 
+export function buildHostDemoListPath(locale: string): string {
+  return buildLocalizedPath(locale, "/host/events/demo");
+}
+
+export function buildHostDemoCreatePath(locale: string): string {
+  return buildLocalizedPath(locale, "/host/events/demo/create");
+}
+
+export function buildHostDemoEditPath(locale: string, eventId: string): string {
+  return buildLocalizedPath(locale, `/host/events/demo/${eventId}`);
+}
+
+export function buildHostDemoSharePath(locale: string, eventId: string): string {
+  return buildLocalizedPath(locale, `/host/events/demo/${eventId}/share`);
+}
+
 export function buildAuthRedirectTarget(params: {
   locale: string;
   qrSlug?: string;

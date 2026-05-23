@@ -27,6 +27,8 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
   const [session, setSession] = useState<LiveCameraSession | undefined>();
   const [cameraState, setCameraState] = useState<CameraState>("loading");
   const [error, setError] = useState<string | null>(null);
+  const [futureNoticeDismissed, setFutureNoticeDismissed] = useState(false);
+  const [futurePreviewTitle, setFuturePreviewTitle] = useState<string | null>(null);
   const {
     event,
     missions,
@@ -53,11 +55,39 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
   const previousMissionId = getPreviousIncompleteMissionId(missionId);
   const nextMissionId = getNextIncompleteMissionId(missionId);
   const isCompletedMission = completedMissionIds.includes(missionId);
+  const showFutureNotice = Boolean(futurePreviewTitle) && !futureNoticeDismissed;
 
   useEffect(() => {
     setSurfaceMode(initialMode === "preview" && draftPhoto ? "preview" : "live");
     setError(null);
   }, [draftPhoto, initialMode, missionId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const hash = window.location.hash.startsWith("#") ? window.location.hash.slice(1) : window.location.hash;
+    const params = new URLSearchParams(hash);
+    if (params.get("hostDemoTiming") === "future") {
+      setFuturePreviewTitle(params.get("hostDemoEventTitle"));
+      return;
+    }
+
+    setFuturePreviewTitle(null);
+  }, []);
+
+  useEffect(() => {
+    if (!showFutureNotice) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setFutureNoticeDismissed(true);
+    }, 5000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [showFutureNotice]);
 
   useEffect(() => {
     if (!isCompletedMission || draftPhoto) {
@@ -202,6 +232,29 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
 
   return (
     <div className="space-y-md">
+      {showFutureNotice ? (
+        <SurfaceCard className="space-y-sm border border-[#d7c4b3] bg-[#fff8f0]">
+          <div className="flex items-start justify-between gap-sm">
+            <div className="space-y-xs">
+              <Heading level={4}>{t("futureEventTitle")}</Heading>
+              <Text tone="muted">
+                {t("futureEventBody", {
+                  eventTitle: futurePreviewTitle || t("futureEventFallbackName")
+                })}
+              </Text>
+            </div>
+            <button
+              type="button"
+              aria-label={t("dismissFutureEventNotice")}
+              onClick={() => setFutureNoticeDismissed(true)}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-lg text-text-secondary transition hover:bg-surface-muted hover:text-text-primary"
+            >
+              x
+            </button>
+          </div>
+        </SurfaceCard>
+      ) : null}
+
       {cameraState === "ready" || surfaceMode === "preview" ? (
         <WebOverlayCamera
           mode={surfaceMode}

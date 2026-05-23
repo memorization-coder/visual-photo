@@ -54,4 +54,5 @@ jobs:
           fetch_and_assert "/en" "Permanent product foundation"
           fetch_and_assert "/en/e/demo" "Opening the next guided camera moment for this session."
           fetch_and_assert "/en/e/demo/wall" "All moments"
-          fetch_and_assert "/en/host/events/demo" "Host event overview"
+          fetch_and_assert "/en/host/events/demo" "New Event"
+          fetch_and_assert "/en/host/events/demo/create" "Generate Event Ideas"

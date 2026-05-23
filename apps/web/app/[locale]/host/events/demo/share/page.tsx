@@ -6,5 +6,5 @@ type HostDemoShareRouteProps = {
 
 export default async function HostDemoShareRoute({ params }: HostDemoShareRouteProps) {
   const { locale } = await params;
-  return <HostPlaceholderPage locale={locale} titleKey="shareTitle" bodyKey="shareBody" />;
+  return <HostPlaceholderPage locale={locale} titleKey="shareRouteTitle" bodyKey="shareRouteBody" />;
 }

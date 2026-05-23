@@ -24,7 +24,10 @@ export function DemoEventPage({ locale }: DemoEventPageProps) {
       return;
     }
 
-    router.replace(buildEventCapturePath(locale, demoEventSlug, activeMission.id));
+    const hash = typeof window === "undefined" ? "" : window.location.hash;
+    router.replace(
+      `${buildEventCapturePath(locale, demoEventSlug, activeMission.id)}${hash}`
+    );
   }, [activeMission, locale, router]);
 
   if (!allComplete) {
@@ -46,8 +49,8 @@ export function DemoEventPage({ locale }: DemoEventPageProps) {
           <Text tone="muted">{t("completeFollowUp")}</Text>
         </Stack>
         <Stack gap="sm">
-          <Button href={buildEventWallPath(locale, demoEventSlug)}>{t("viewWall")}</Button>
-          <Button href={buildEventWallPath(locale, demoEventSlug)} variant="outlined">
+          <Button onClick={() => router.push(buildEventWallPath(locale, demoEventSlug))}>{t("viewWall")}</Button>
+          <Button onClick={() => router.push(buildEventWallPath(locale, demoEventSlug))} variant="outlined">
             {t("reviewWall")}
           </Button>
         </Stack>
