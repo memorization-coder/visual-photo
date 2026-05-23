@@ -253,7 +253,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
 
     createEvent(formState);
     clearDraft(draftKey);
-    router.push(buildHostDemoListPath(locale));
+    window.location.href = "https://visual-photo-web.vercel.app/en/e/demo/";
   }
 
   function handleEditSubmit() {
