@@ -13,10 +13,10 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
   {
     id: "host-demo-seed-birthday",
     role: "hosting",
-    title: "Harbour Birthday Brunch",
-    hostPrompt: "A bright first birthday brunch by the harbour. Capture family warmth, cake-table details, and playful moments around the birthday girl.",
+    title: "Golden Hour Wedding Feast",
+    hostPrompt: "A relaxed golden-hour wedding feast with long tables, warm laughter, family hugs, and small styling details that make the evening feel personal.",
     imageUrl:
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
     participantPreviewNames: ["Mia", "Jordan", "Ava", "Leo", "Nina", "Sam"],
     invitedGuestCount: 4,
     startAt: "2026-05-20T09:00",
@@ -27,11 +27,11 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
     guestCapacityLimit: 15,
     eventTier: "small",
     missions: [
-      { id: "seed-birthday-1", prompt: "The birthday cake or table styling before everyone gathers", aiGenerated: true },
-      { id: "seed-birthday-2", prompt: "Someone making the birthday girl laugh", aiGenerated: true },
-      { id: "seed-birthday-3", prompt: "A family photo that feels warm rather than posed", aiGenerated: true },
-      { id: "seed-birthday-4", prompt: "A small party detail the host may miss while busy", aiGenerated: true },
-      { id: "seed-birthday-5", prompt: "A quiet cuddle or proud-parent moment", aiGenerated: true }
+      { id: "seed-wedding-current-1", prompt: "Someone laughing naturally", aiGenerated: true },
+      { id: "seed-anniversary-2", prompt: "A moment that feels like family", aiGenerated: true },
+      { id: "seed-anniversary-3", prompt: "A detail the hosts worked hard on", aiGenerated: true },
+      { id: "seed-wedding-current-4", prompt: "Someone dancing like nobody’s watching", aiGenerated: true },
+      { id: "seed-wedding-current-5", prompt: "A happy reaction during the event", aiGenerated: true }
     ],
     createdAt: "2026-05-20T09:00:00.000Z",
     updatedAt: "2026-05-20T09:00:00.000Z",
