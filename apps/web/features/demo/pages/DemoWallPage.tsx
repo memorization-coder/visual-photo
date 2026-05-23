@@ -41,7 +41,7 @@ export function DemoWallPage() {
       <div className="space-y-md">
         <section className="space-y-sm">
           <SurfaceCard className="space-y-md">
-            <div className="flex items-center justify-between gap-md rounded-2xl bg-[#f6efe7] px-md py-md">
+            <div className="flex items-center justify-between gap-md rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-emphasis)] px-md py-md">
               <Stack gap="xs" className="min-w-0">
                 <Text as="p" variant="labelSm" tone="muted">
                   {t("summaryLabel")}
@@ -58,7 +58,7 @@ export function DemoWallPage() {
                     key={memory.id}
                     src={memory.thumbnailUrl}
                     alt={memory.participantName}
-                    className="absolute top-0 h-14 w-12 rounded-lg border-2 border-white object-cover shadow-[0_10px_24px_rgba(76,52,39,0.18)]"
+                    className="absolute top-0 h-14 w-12 rounded-lg border-2 border-[var(--color-surface-raised)] object-cover shadow-card"
                     style={{ left: `${index * 18}px`, zIndex: previewStack.length - index }}
                   />
                 ))}

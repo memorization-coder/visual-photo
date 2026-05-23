@@ -88,8 +88,8 @@ export function DemoHostSharePage({ locale, eventId }: DemoHostSharePageProps) {
             <Heading level={2}>{event.title}</Heading>
             <Text tone="muted">{t("shareEventBodySimple")}</Text>
           </Stack>
-          <div className="rounded-2xl border border-dashed border-[#d7c4b3] bg-[#fff8f0] p-lg text-center">
-            <div className="mx-auto flex h-56 w-56 items-center justify-center overflow-hidden rounded-2xl border border-[#d7c4b3] bg-white p-sm">
+          <div className="rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)] p-lg text-center">
+            <div className="mx-auto flex h-56 w-56 items-center justify-center overflow-hidden rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface-raised)] p-sm">
               <img src={qrCodeUrl} alt={t("shareQrAlt")} className="h-full w-full object-contain" />
             </div>
             <div className="mt-lg flex justify-center">

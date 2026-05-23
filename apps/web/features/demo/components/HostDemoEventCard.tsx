@@ -98,7 +98,7 @@ export function HostDemoEventCard({ event, locale }: HostDemoEventCardProps) {
       </button>
       <div className="space-y-md p-lg">
         {notice ? (
-          <div className="flex items-start justify-between gap-sm rounded-2xl border border-[#d7c4b3] bg-[#fff8f0] px-md py-sm">
+          <div className="flex items-start justify-between gap-sm rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)] px-md py-sm">
             <Text as="p" className="text-sm">
               {notice}
             </Text>

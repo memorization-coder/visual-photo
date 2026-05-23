@@ -32,7 +32,7 @@ function buttonClasses(variant: ButtonVariant, size: ButtonSize, className?: str
     size === "md" && "min-h-11 px-lg py-sm text-sm",
     size === "lg" && "min-h-12 px-lg py-md text-base",
     variant === "filled" && "bg-accent text-white hover:opacity-95",
-    variant === "outlined" && "border border-[#d7c7b8] bg-surface text-text-primary hover:bg-surface-muted",
+    variant === "outlined" && "border border-[var(--color-border-strong)] bg-surface text-text-primary hover:bg-surface-muted",
     variant === "ghost" && "bg-transparent text-text-primary hover:bg-surface-muted",
     variant === "muted" && "bg-surface-muted text-text-primary hover:opacity-95",
     variant === "success" && "bg-success text-white hover:opacity-95",

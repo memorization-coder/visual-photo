@@ -15,9 +15,9 @@ export function Card({ children, className, variant = "surface", padded = true }
     <section
       className={clsx(
         "rounded-xl border shadow-card",
-        variant === "surface" && "border-[#e6d7c8] bg-surface",
-        variant === "muted" && "border-[#eadfce] bg-surface-muted",
-        variant === "emphasis" && "border-[#d7c4b3] bg-[#fff6ed]",
+        variant === "surface" && "border-[var(--color-border)] bg-surface",
+        variant === "muted" && "border-[var(--color-border)] bg-surface-muted",
+        variant === "emphasis" && "border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)]",
         padded && "p-lg",
         className
       )}

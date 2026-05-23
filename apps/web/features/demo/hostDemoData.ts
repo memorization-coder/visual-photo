@@ -92,6 +92,33 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
     isSeeded: true
   },
   {
+    id: "host-demo-seed-engagement",
+    role: "hosting",
+    title: "Garden Engagement Lunch",
+    hostPrompt: "An outdoor engagement lunch with soft florals, relaxed laughter, and moments that feel intimate rather than staged.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80",
+    participantPreviewNames: ["Ella", "James", "Ruby", "Oliver", "Skye", "Mason"],
+    invitedGuestCount: 5,
+    startAt: "2026-09-12T12:00",
+    endAt: "2026-09-12T16:30",
+    revealMode: "after",
+    revealDelayHours: 12,
+    allowGuestGalleryView: true,
+    guestCapacityLimit: 5,
+    eventTier: "free",
+    missions: [
+      { id: "seed-engagement-1", prompt: "A candid laugh between the couple before everyone notices", aiGenerated: true },
+      { id: "seed-engagement-2", prompt: "A floral or table detail that sets the mood", aiGenerated: true },
+      { id: "seed-engagement-3", prompt: "Someone reacting warmly during a toast or speech", aiGenerated: true },
+      { id: "seed-engagement-4", prompt: "A photo that makes the garden setting feel calm and special", aiGenerated: true },
+      { id: "seed-engagement-5", prompt: "A quiet in-between frame that feels personal", aiGenerated: true }
+    ],
+    createdAt: "2026-05-21T07:30:00.000Z",
+    updatedAt: "2026-05-21T07:30:00.000Z",
+    isSeeded: true
+  },
+  {
     id: "host-demo-participating-picnic",
     role: "participating",
     title: "Golden Hour Picnic",
@@ -164,6 +191,31 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
     ],
     createdAt: "2026-02-28T07:30:00.000Z",
     updatedAt: "2026-02-28T07:30:00.000Z",
+    isSeeded: true
+  },
+  {
+    id: "host-demo-participating-market",
+    role: "participating",
+    title: "Night Market Birthday",
+    hostPrompt: "A lively birthday evening at a night market with food, lights, and energetic candid moments.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1523905330026-b8bd1f5f320e?auto=format&fit=crop&w=1200&q=80",
+    participantPreviewNames: ["Sienna", "Kai", "Liam", "Zoe"],
+    invitedGuestCount: 8,
+    startAt: "2026-10-03T18:00",
+    endAt: "2026-10-03T22:30",
+    revealMode: "during",
+    revealDelayHours: 12,
+    allowGuestGalleryView: true,
+    guestCapacityLimit: 15,
+    eventTier: "small",
+    missions: [
+      { id: "seed-market-1", prompt: "A moment that captures the lights and movement of the market", aiGenerated: true },
+      { id: "seed-market-2", prompt: "A food stall detail that feels colourful and fun", aiGenerated: true },
+      { id: "seed-market-3", prompt: "Friends reacting to something unexpected or funny", aiGenerated: true }
+    ],
+    createdAt: "2026-05-11T07:30:00.000Z",
+    updatedAt: "2026-05-11T07:30:00.000Z",
     isSeeded: true
   }
 ];

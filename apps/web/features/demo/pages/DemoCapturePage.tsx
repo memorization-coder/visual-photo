@@ -233,7 +233,7 @@ export function DemoCapturePage({ locale, missionId, initialMode = "live" }: Dem
   return (
     <div className="space-y-md">
       {showFutureNotice ? (
-        <SurfaceCard className="space-y-sm border border-[#d7c4b3] bg-[#fff8f0]">
+        <SurfaceCard className="space-y-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)]">
           <div className="flex items-start justify-between gap-sm">
             <div className="space-y-xs">
               <Heading level={4}>{t("futureEventTitle")}</Heading>

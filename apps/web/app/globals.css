@@ -6,6 +6,8 @@
   --color-background: #f7f1ea;
   --color-surface: #fffaf5;
   --color-surface-muted: #efe3d6;
+  --color-surface-emphasis: #fff3e7;
+  --color-surface-raised: #ffffff;
   --color-text-primary: #2f241d;
   --color-text-secondary: #6e5b51;
   --color-accent: #c86d4b;
@@ -13,6 +15,13 @@
   --color-success: #3e7c59;
   --color-warning: #ae7c22;
   --color-error: #a2473d;
+  --color-border: #eadfce;
+  --color-border-strong: #d7c4b3;
+  --color-border-accent: #d79f87;
+  --color-overlay: rgba(35, 24, 18, 0.45);
+  --page-glow: rgba(255, 255, 255, 0.45);
+  --page-gradient-start: #f9f4ef;
+  --page-gradient-end: #f4ede4;
   --radius-sm: 0.5rem;
   --radius-md: 0.875rem;
   --radius-lg: 1.25rem;
@@ -27,20 +36,46 @@
   --font-family-sans: "Segoe UI", "Aptos", "Helvetica Neue", sans-serif;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #17120f;
+    --color-surface: #221a16;
+    --color-surface-muted: #2d221d;
+    --color-surface-emphasis: #34261f;
+    --color-surface-raised: #2a1f1a;
+    --color-text-primary: #f6ebe0;
+    --color-text-secondary: #c9b5a4;
+    --color-accent: #e68b66;
+    --color-accent-soft: #54372d;
+    --color-success: #6db38a;
+    --color-warning: #d8a751;
+    --color-error: #e08c82;
+    --color-border: #43322a;
+    --color-border-strong: #6b5143;
+    --color-border-accent: #d68a67;
+    --color-overlay: rgba(10, 7, 6, 0.7);
+    --page-glow: rgba(230, 139, 102, 0.08);
+    --page-gradient-start: #1b1512;
+    --page-gradient-end: #120e0c;
+    --shadow-card: 0 28px 72px rgba(0, 0, 0, 0.38);
+    --shadow-focus: 0 0 0 3px rgba(230, 139, 102, 0.38);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  color-scheme: light;
+  color-scheme: light dark;
 }
 
 body {
   margin: 0;
   min-block-size: 100vh;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.45), transparent 32rem),
-    linear-gradient(180deg, #f9f4ef 0%, #f4ede4 100%);
+    radial-gradient(circle at top, var(--page-glow), transparent 32rem),
+    linear-gradient(180deg, var(--page-gradient-start) 0%, var(--page-gradient-end) 100%);
   color: var(--color-text-primary);
   font-family: var(--font-family-sans);
 }
@@ -60,4 +95,3 @@ select {
 .text-start {
   text-align: start;
 }
-

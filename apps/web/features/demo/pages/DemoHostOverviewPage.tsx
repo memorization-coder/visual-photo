@@ -63,7 +63,7 @@ export function DemoHostOverviewPage({ locale }: DemoHostOverviewPageProps) {
           <Heading level={4}>{t("generatedMomentsTitle")}</Heading>
           <div className="space-y-sm">
             {demoMissions.map((mission) => (
-              <div key={mission.id} className="rounded-xl border border-[#eadfce] bg-surface-muted px-md py-md">
+              <div key={mission.id} className="rounded-xl border border-[var(--color-border)] bg-surface-muted px-md py-md">
                 <Text as="p" variant="labelSm" tone="muted">
                   {t("momentNumber", { current: mission.missionOrder + 1 })}
                 </Text>
@@ -79,11 +79,11 @@ export function DemoHostOverviewPage({ locale }: DemoHostOverviewPageProps) {
           <Heading level={4}>{t("sharePanelTitle")}</Heading>
           <Stack gap="sm">
             <Text tone="muted">{t("sharePanelBody")}</Text>
-            <div className="rounded-2xl border border-dashed border-[#d7c4b3] bg-[#fff8f0] p-lg text-center">
+            <div className="rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)] p-lg text-center">
               <Text as="p" variant="labelSm" tone="muted">
                 {t("fakeQrLabel")}
               </Text>
-              <div className="mx-auto mt-md h-40 w-40 rounded-2xl border border-[#d7c4b3] bg-[linear-gradient(135deg,#fffdf8_0%,#f2e3d3_100%)]" />
+              <div className="mx-auto mt-md h-40 w-40 rounded-2xl border border-[var(--color-border-strong)] bg-[linear-gradient(135deg,var(--color-surface-raised)_0%,var(--color-surface-muted)_100%)]" />
               <Text as="p" className="mt-md break-all">
                 {guestLink}
               </Text>

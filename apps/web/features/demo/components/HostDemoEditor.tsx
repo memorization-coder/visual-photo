@@ -50,6 +50,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
   const [paywallVisible, setPaywallVisible] = useState(false);
   const [draggedMissionIndex, setDraggedMissionIndex] = useState<number | null>(null);
   const [selectedGuestPack, setSelectedGuestPack] = useState<number | null>(null);
+  const [momentsExpanded, setMomentsExpanded] = useState(mode !== "edit");
   const initializedDraftKeyRef = useRef<string | null>(null);
   const canEditEvent = mode === "create" || (event?.role === "hosting" && getHostDemoEventTimingState(event) === "future");
 
@@ -69,16 +70,19 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
       clearDraft(draftKey);
       setFormState(defaultHostDemoDraftState);
       setSelectedGuestPack(null);
+      setMomentsExpanded(true);
       return;
     }
 
     if (storedDraft) {
       setFormState(storedDraft);
       setSelectedGuestPack(null);
+      setMomentsExpanded(false);
       return;
     }
 
     setSelectedGuestPack(null);
+    setMomentsExpanded(false);
     setFormState(initializeDraft(draftKey, eventId));
   }, [clearDraft, draftKey, eventId, getDraft, initializeDraft, isHydrated, mode]);
 
@@ -321,7 +325,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 setDraggedMissionIndex(null);
               }}
               onDragEnd={() => setDraggedMissionIndex(null)}
-              className="rounded-2xl border border-[#eadfce] bg-surface-muted p-md"
+              className="rounded-2xl border border-[var(--color-border)] bg-surface-muted p-md"
               data-testid={`host-demo-mission-${index + 1}`}
             >
               <div className="mb-sm flex items-center justify-between gap-sm">
@@ -341,7 +345,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 value={mission.prompt}
                 onChange={(eventInput) => updateMission(index, eventInput.target.value)}
                 data-testid={`host-demo-mission-input-${index + 1}`}
-                className="w-full rounded-xl border border-[#d7c7b8] bg-surface px-md py-md text-sm text-text-primary"
+                className="w-full rounded-xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary"
               />
             </div>
           ))}
@@ -358,6 +362,36 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
     );
   }
 
+  function renderEditMomentsSection() {
+    return (
+      <div className="space-y-md rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-emphasis)] p-lg">
+        <button
+          type="button"
+          onClick={() => setMomentsExpanded((current) => !current)}
+          className="flex w-full items-center justify-between gap-md text-left"
+          data-testid="host-demo-toggle-moments"
+        >
+          <div className="space-y-xs">
+            <Text as="p" variant="labelMd">
+              {t("generatedMomentsTitle")}
+            </Text>
+            <Text tone="muted">{t("momentsSummary", { count: formState.missions.length })}</Text>
+          </div>
+          <Text as="span" variant="labelMd">
+            {momentsExpanded ? t("hideMoments") : t("expandMoments")}
+          </Text>
+        </button>
+
+        {momentsExpanded ? (
+          <>
+            {renderMissionsEditor()}
+            {momentsError ? <Text tone="error">{momentsError}</Text> : null}
+          </>
+        ) : null}
+      </div>
+    );
+  }
+
   function renderSettingsFields() {
     return (
       <>
@@ -371,7 +405,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
               value={formState.startAt}
               onChange={(eventInput) => updateDraft({ startAt: eventInput.target.value })}
               data-testid="host-demo-start-at"
-              className="w-full rounded-2xl border border-[#d7c7b8] bg-surface px-md py-md text-sm text-text-primary"
+              className="w-full rounded-2xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary"
             />
           </div>
           <div className="space-y-sm">
@@ -383,7 +417,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
               value={formState.endAt}
               onChange={(eventInput) => updateDraft({ endAt: eventInput.target.value })}
               data-testid="host-demo-end-at"
-              className="w-full rounded-2xl border border-[#d7c7b8] bg-surface px-md py-md text-sm text-text-primary"
+              className="w-full rounded-2xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary"
             />
           </div>
         </div>
@@ -402,7 +436,9 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 onClick={() => updateDraft({ revealMode: value as HostDemoDraftState["revealMode"] })}
                 data-testid={`host-demo-reveal-${value}`}
                 className={`rounded-2xl border px-md py-md text-start ${
-                  formState.revealMode === value ? "border-[#d79f87] bg-[#fff2e9]" : "border-[#eadfce] bg-surface-muted"
+                  formState.revealMode === value
+                    ? "border-[var(--color-border-accent)] bg-[var(--color-accent-soft)]"
+                    : "border-[var(--color-border)] bg-surface-muted"
                 }`}
               >
                 <Text as="span" variant="labelMd">
@@ -424,12 +460,12 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
               value={formState.revealDelayHours}
               onChange={(eventInput) => updateDraft({ revealDelayHours: Number(eventInput.target.value || 0) })}
               data-testid="host-demo-delay-hours"
-              className="w-full rounded-2xl border border-[#d7c7b8] bg-surface px-md py-md text-sm text-text-primary sm:max-w-[12rem]"
+              className="w-full rounded-2xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary sm:max-w-[12rem]"
             />
           </div>
         ) : null}
 
-        <label className="flex items-center gap-sm rounded-2xl border border-[#eadfce] bg-surface-muted px-md py-md">
+        <label className="flex items-center gap-sm rounded-2xl border border-[var(--color-border)] bg-surface-muted px-md py-md">
           <input
             type="checkbox"
             checked={formState.allowGuestGalleryView}
@@ -451,7 +487,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
     ];
 
     return (
-      <div className="space-y-md rounded-2xl border border-[#eadfce] bg-[#fff8f0] p-lg">
+      <div className="space-y-md rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-emphasis)] p-lg">
         <div className="space-y-xs">
           <Text as="p" variant="labelMd">
             {t("guestInvited.label")}
@@ -473,7 +509,9 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 updateDraft({ guestCapacityLimit: option.value, eventTier: option.tier });
               }}
               className={`rounded-2xl border px-md py-md text-left ${
-                selectedGuestPack === option.value ? "border-[#d79f87] bg-[#fff2e9]" : "border-[#eadfce] bg-surface"
+                selectedGuestPack === option.value
+                  ? "border-[var(--color-border-accent)] bg-[var(--color-accent-soft)]"
+                  : "border-[var(--color-border)] bg-surface"
               }`}
             >
               <Text as="p" variant="labelMd">
@@ -493,8 +531,8 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
     }
 
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(35,24,18,0.45)] px-md">
-        <div className="w-full max-w-md rounded-[1.75rem] bg-white p-lg shadow-[0_24px_80px_rgba(48,31,19,0.28)]">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-overlay)] px-md">
+        <div className="w-full max-w-md rounded-[1.75rem] bg-[var(--color-surface-raised)] p-lg shadow-card">
           <div className="flex justify-end">
             <button type="button" onClick={() => setDeleteVisible(false)} className="flex h-9 w-9 items-center justify-center rounded-full text-lg">
               x
@@ -528,8 +566,8 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
     }
 
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(35,24,18,0.45)] px-md">
-        <div className="w-full max-w-lg rounded-[1.75rem] bg-white p-lg shadow-[0_24px_80px_rgba(48,31,19,0.28)]">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-overlay)] px-md">
+        <div className="w-full max-w-lg rounded-[1.75rem] bg-[var(--color-surface-raised)] p-lg shadow-card">
           <div className="flex justify-end">
             <button type="button" onClick={() => setPaywallVisible(false)} className="flex h-9 w-9 items-center justify-center rounded-full text-lg">
               x
@@ -539,10 +577,10 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
             <Heading level={3}>{t("paywall.title")}</Heading>
             <Text tone="muted">{t("paywall.body")}</Text>
             <div className="grid grid-cols-1 gap-sm">
-              <div className="rounded-2xl border border-[#eadfce] bg-surface-muted p-md">{t("paywall.optionTen")}</div>
-              <div className="rounded-2xl border border-[#eadfce] bg-surface-muted p-md">{t("paywall.optionTwentyFive")}</div>
-              <div className="rounded-2xl border border-[#eadfce] bg-surface-muted p-md">{t("paywall.optionFifty")}</div>
-              <div className="rounded-2xl border border-[#eadfce] bg-surface-muted p-md">{t("paywall.optionHundred")}</div>
+              <div className="rounded-2xl border border-[var(--color-border)] bg-surface-muted p-md">{t("paywall.optionTen")}</div>
+              <div className="rounded-2xl border border-[var(--color-border)] bg-surface-muted p-md">{t("paywall.optionTwentyFive")}</div>
+              <div className="rounded-2xl border border-[var(--color-border)] bg-surface-muted p-md">{t("paywall.optionFifty")}</div>
+              <div className="rounded-2xl border border-[var(--color-border)] bg-surface-muted p-md">{t("paywall.optionHundred")}</div>
             </div>
             <div className="flex justify-end">
               <Button
@@ -572,7 +610,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
             <SurfaceCard className="space-y-lg">
               <div className="flex justify-end">{renderCloseButton()}</div>
 
-              <label className="block cursor-pointer overflow-hidden rounded-[1.75rem] border border-dashed border-[#d7c4b3] bg-[#fff8f0]">
+              <label className="block cursor-pointer overflow-hidden rounded-[1.75rem] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)]">
                 <img src={formState.imageUrl} alt={t("imagePreviewAlt")} className="aspect-[4/3] w-full object-cover" />
                 <input
                   type="file"
@@ -593,12 +631,11 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                   value={formState.title}
                   onChange={(eventInput) => updateDraft({ title: eventInput.target.value })}
                   data-testid="host-demo-title-input"
-                  className="w-full rounded-2xl border border-[#d7c7b8] bg-surface px-md py-md text-base font-semibold text-text-primary"
+                  className="w-full rounded-2xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-base font-semibold text-text-primary"
                 />
               </div>
 
-              {renderMissionsEditor()}
-              {momentsError ? <Text tone="error">{momentsError}</Text> : null}
+              {renderEditMomentsSection()}
               {renderSettingsFields()}
               {scheduleError ? <Text tone="error">{scheduleError}</Text> : null}
 
@@ -622,7 +659,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
         {formState.currentStep === 0 ? (
           <SurfaceCard className="space-y-lg">
             <div className="flex justify-end">{renderCloseButton()}</div>
-            <label className="block cursor-pointer overflow-hidden rounded-[1.75rem] border border-dashed border-[#d7c4b3] bg-[#fff8f0]">
+            <label className="block cursor-pointer overflow-hidden rounded-[1.75rem] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)]">
               {formState.imageUrl ? (
                 <img src={formState.imageUrl} alt={t("imagePreviewAlt")} className="aspect-[4/3] w-full object-cover" />
               ) : (
@@ -645,7 +682,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 onChange={(eventInput) => updateDraft({ hostPrompt: eventInput.target.value })}
                 rows={5}
                 data-testid="host-demo-prompt-input"
-                className="w-full rounded-2xl border border-[#d7c7b8] bg-surface px-md py-md text-sm text-text-primary"
+                className="w-full rounded-2xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary"
                 placeholder={t("promptPlaceholder")}
               />
               <div className="flex flex-wrap gap-sm">
@@ -657,8 +694,8 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                     data-testid={`host-demo-prompt-example-${index + 1}`}
                     className={`rounded-2xl border border-dashed px-md py-sm text-left text-sm transition ${
                       formState.hostPrompt === example
-                        ? "border-[#d79f87] bg-[#fff2e9] text-text-primary"
-                        : "border-[#d7c7b8] bg-[#fff7ef] text-text-secondary hover:border-[#c79f84] hover:text-text-primary"
+                        ? "border-[var(--color-border-accent)] bg-[var(--color-accent-soft)] text-text-primary"
+                        : "border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)] text-text-secondary hover:border-[var(--color-border-accent)] hover:text-text-primary"
                     }`}
                   >
                     {example}
@@ -685,7 +722,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 value={formState.title}
                 onChange={(eventInput) => updateDraft({ title: eventInput.target.value })}
                 data-testid="host-demo-title-input"
-                className="w-full rounded-2xl border border-[#d7c7b8] bg-surface px-md py-md text-base font-semibold text-text-primary"
+                className="w-full rounded-2xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-base font-semibold text-text-primary"
                 placeholder={t("eventTitleLabel")}
               />
             </div>

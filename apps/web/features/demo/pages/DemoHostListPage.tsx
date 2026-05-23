@@ -125,8 +125,8 @@ export function DemoHostListPage({ locale }: DemoHostListPageProps) {
                 onClick={() => setActiveRole(role)}
                 className={`rounded-full px-md py-sm text-sm font-medium transition ${
                   activeRole === role
-                    ? "bg-text-primary text-white"
-                    : "bg-surface-muted text-text-secondary hover:text-text-primary"
+                    ? "bg-accent text-white"
+                    : "border border-[var(--color-border)] bg-surface-muted text-text-secondary hover:text-text-primary"
                 }`}
                 data-testid={`host-demo-tab-${role}`}
               >

@@ -5,5 +5,5 @@ type DividerProps = {
 };
 
 export function Divider({ className }: DividerProps) {
-  return <hr className={clsx("border-0 border-t border-[#eadfce]", className)} />;
+  return <hr className={clsx("border-0 border-t border-[var(--color-border)]", className)} />;
 }

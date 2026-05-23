@@ -26,11 +26,11 @@ export function MemoryCard({ memory, mission, loveCount, onOpen }: MemoryCardPro
   return (
     <SurfaceCard
       className={clsx(
-        "overflow-hidden border-[#e8dbcd] bg-[#f6efe7] p-sm shadow-[0_18px_44px_rgba(76,52,39,0.12)]",
+        "overflow-hidden border-[var(--color-border)] bg-[var(--color-surface-emphasis)] p-sm shadow-card",
         rotationClass
       )}
     >
-      <div className="rounded-md bg-white p-xs shadow-[0_8px_20px_rgba(76,52,39,0.08)]">
+      <div className="rounded-md bg-[var(--color-surface-raised)] p-xs shadow-card">
         <Button variant="ghost" className="block w-full p-0 hover:bg-transparent" onClick={onOpen}>
           <img
             src={memory.thumbnailUrl}
