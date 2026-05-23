@@ -6,8 +6,10 @@ import { applyDraftToEvent, createDraftFromEvent, createEventFromDraft } from ".
 import type { HostDemoDraftState, HostDemoEvent } from "./hostDemoTypes";
 
 const STORAGE_KEY = "visual-photo-host-demo-state";
+const STORAGE_VERSION = 2;
 
 type StoredState = {
+  version: number;
   events: HostDemoEvent[];
   drafts: Record<string, HostDemoDraftState>;
 };
@@ -38,7 +40,12 @@ function readStoredState(): StoredState | null {
       return null;
     }
 
-    return JSON.parse(raw) as StoredState;
+    const parsed = JSON.parse(raw) as StoredState;
+    if (parsed.version !== STORAGE_VERSION) {
+      return null;
+    }
+
+    return parsed;
   } catch {
     return null;
   }
@@ -66,7 +73,7 @@ export function DemoHostPrototypeProvider({ children }: { children: React.ReactN
     }
 
     try {
-      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ events, drafts }));
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ version: STORAGE_VERSION, events, drafts }));
     } catch {
       // Best-effort persistence only for the prototype session.
     }

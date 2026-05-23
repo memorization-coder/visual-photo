@@ -40,11 +40,11 @@ export function generateHostDemoIdeas(hostPrompt: string): Pick<HostDemoDraftSta
     return {
       title: "Candlelight Wedding Dinner",
       missions: [
-        "A candid glance that says something real",
-        "A table detail that captures the atmosphere",
-        "Someone reacting emotionally without posing",
-        "A moment of warmth between guests",
-        "A frame that feels intimate and cinematic"
+        "Someone laughing naturally",
+        "A moment that feels like family",
+        "A detail the hosts worked hard on",
+        "Someone dancing like nobody’s watching",
+        "A happy reaction during the event"
       ].map((mission, index) => buildMission(idPrefix, mission, index))
     };
   }

@@ -16,12 +16,12 @@ export type DemoSeedMemory = {
 export const demoEventSlug = "demo";
 export const demoEventId = "550e8400-e29b-41d4-a716-446655440100";
 export const demoParticipantId = "550e8400-e29b-41d4-a716-446655440101";
-export const demoEventDescription = "A relaxed baby birthday with close friends and family.";
+export const demoEventDescription = "A relaxed candlelight wedding dinner with close friends and family.";
 
 export const demoEvent: Event = {
   id: demoEventId,
   hostUserId: "550e8400-e29b-41d4-a716-446655440102",
-  title: "Little Moments Together",
+  title: "Candlelight Wedding Dinner",
   status: "published",
   qrSlug: demoEventSlug,
   createdAt: "2026-05-22T00:00:00.000Z",
@@ -44,9 +44,9 @@ export const demoMissions: Mission[] = [
     id: "550e8400-e29b-41d4-a716-446655440110",
     eventId: demoEventId,
     missionOrder: 0,
-    prompt: "A tiny detail people may forget later",
-    category: "detail",
-    captureHint: "Look for something small that carries the day.",
+    prompt: "Someone laughing naturally",
+    category: "joy",
+    captureHint: "Catch a laugh that feels effortless and real.",
     isActive: true,
     createdAt: "2026-05-22T00:00:00.000Z",
     updatedAt: "2026-05-22T00:00:00.000Z"
@@ -55,9 +55,9 @@ export const demoMissions: Mission[] = [
     id: "550e8400-e29b-41d4-a716-446655440111",
     eventId: demoEventId,
     missionOrder: 1,
-    prompt: "A moment that feels like laughter",
-    category: "joy",
-    captureHint: "Catch a split second that feels alive.",
+    prompt: "A moment that feels like family",
+    category: "connection",
+    captureHint: "Look for warmth between people instead of posed smiles.",
     isActive: true,
     createdAt: "2026-05-22T00:00:00.000Z",
     updatedAt: "2026-05-22T00:00:00.000Z"
@@ -66,9 +66,9 @@ export const demoMissions: Mission[] = [
     id: "550e8400-e29b-41d4-a716-446655440112",
     eventId: demoEventId,
     missionOrder: 2,
-    prompt: "Someone making the baby feel loved",
-    category: "care",
-    captureHint: "Focus on tenderness instead of posing.",
+    prompt: "A detail the hosts worked hard on",
+    category: "detail",
+    captureHint: "Notice the styling, setup, or small touches others may overlook.",
     isActive: true,
     createdAt: "2026-05-22T00:00:00.000Z",
     updatedAt: "2026-05-22T00:00:00.000Z"
@@ -77,9 +77,9 @@ export const demoMissions: Mission[] = [
     id: "550e8400-e29b-41d4-a716-446655440113",
     eventId: demoEventId,
     missionOrder: 3,
-    prompt: "Something the host might miss",
-    category: "surprise",
-    captureHint: "Look behind the main moment.",
+    prompt: "Someone dancing like nobody’s watching",
+    category: "energy",
+    captureHint: "Find a movement-filled frame that feels playful and unfiltered.",
     isActive: true,
     createdAt: "2026-05-22T00:00:00.000Z",
     updatedAt: "2026-05-22T00:00:00.000Z"
@@ -88,20 +88,9 @@ export const demoMissions: Mission[] = [
     id: "550e8400-e29b-41d4-a716-446655440114",
     eventId: demoEventId,
     missionOrder: 4,
-    prompt: "The birthday from a guest's point of view",
-    category: "perspective",
-    captureHint: "Show what the day feels like from where you stand.",
-    isActive: true,
-    createdAt: "2026-05-22T00:00:00.000Z",
-    updatedAt: "2026-05-22T00:00:00.000Z"
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440115",
-    eventId: demoEventId,
-    missionOrder: 5,
-    prompt: "A quiet happy moment",
-    category: "quiet",
-    captureHint: "Find calm instead of spectacle.",
+    prompt: "A happy reaction during the event",
+    category: "reaction",
+    captureHint: "Focus on a genuine response in the middle of the celebration.",
     isActive: true,
     createdAt: "2026-05-22T00:00:00.000Z",
     updatedAt: "2026-05-22T00:00:00.000Z"
@@ -135,7 +124,7 @@ export const demoSeedMemories: DemoSeedMemory[] = [
   },
   {
     id: "550e8400-e29b-41d4-a716-446655440122",
-    missionId: demoMissions[5].id,
+    missionId: demoMissions[4].id,
     participantId: "550e8400-e29b-41d4-a716-446655440132",
     participantName: "Mia",
     thumbnailUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",

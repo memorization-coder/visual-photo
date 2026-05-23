@@ -7,7 +7,7 @@ export const hostPromptExamples = [
 ];
 
 export const defaultCreateImageUrl =
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80";
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80";
 
 export const hostDemoSeedEvents: HostDemoEvent[] = [
   {
@@ -54,11 +54,11 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
     guestCapacityLimit: 5,
     eventTier: "free",
     missions: [
-      { id: "seed-wedding-1", prompt: "A glance that feels unposed", aiGenerated: true },
-      { id: "seed-wedding-2", prompt: "Hands, place cards, or details worth remembering", aiGenerated: true },
-      { id: "seed-wedding-3", prompt: "A table moment full of warmth", aiGenerated: true },
-      { id: "seed-wedding-4", prompt: "Something joyful beyond the main couple", aiGenerated: true },
-      { id: "seed-wedding-5", prompt: "A quiet frame that feels cinematic", aiGenerated: true }
+      { id: "seed-wedding-1", prompt: "Someone laughing naturally", aiGenerated: true },
+      { id: "seed-wedding-2", prompt: "A moment that feels like family", aiGenerated: true },
+      { id: "seed-wedding-3", prompt: "A detail the hosts worked hard on", aiGenerated: true },
+      { id: "seed-wedding-4", prompt: "Someone dancing like nobody’s watching", aiGenerated: true },
+      { id: "seed-wedding-5", prompt: "A happy reaction during the event", aiGenerated: true }
     ],
     createdAt: "2026-05-19T07:30:00.000Z",
     updatedAt: "2026-05-19T07:30:00.000Z",
@@ -222,7 +222,7 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
 
 export const defaultHostDemoDraftState: HostDemoDraftState = {
   title: "",
-  hostPrompt: hostPromptExamples[0],
+  hostPrompt: hostPromptExamples[1],
   imageUrl: defaultCreateImageUrl,
   startAt: "",
   endAt: "",
