@@ -38,7 +38,7 @@ export function DemoSubmittedPage({ locale }: DemoSubmittedPageProps) {
         ) : null}
         <Link
           href={buildEventWallPath(locale, demoEventSlug)}
-          className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[#d7c7b8] bg-surface px-lg py-sm text-sm font-medium text-text-primary transition hover:bg-surface-muted"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border-strong)] bg-surface px-lg py-sm text-sm font-medium text-text-primary transition hover:bg-surface-muted"
         >
           {t("viewWall")}
         </Link>

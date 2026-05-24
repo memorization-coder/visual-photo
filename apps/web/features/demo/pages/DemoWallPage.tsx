@@ -51,6 +51,11 @@ export function DemoWallPage() {
                     ? t("filteredVisibleCount", { count: filteredMemories.length })
                     : t("visibleCount", { count: allMemories.length })}
                 </Text>
+                <Text tone="muted">
+                  {selectedFilterMission
+                    ? t("filteredMomentsDescription", { mission: selectedFilterMission.prompt })
+                    : t("allMomentsDescription")}
+                </Text>
               </Stack>
               <div className="relative h-14 w-20 shrink-0">
                 {previewStack.map((memory, index) => (

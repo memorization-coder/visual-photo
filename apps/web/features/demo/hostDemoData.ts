@@ -1,10 +1,12 @@
 import type { HostDemoDraftState, HostDemoEvent } from "./hostDemoTypes";
 
 export const hostPromptExamples = [
-  "This is my baby's first birthday. Help guests capture warm, funny little moments.",
-  "This is a relaxed wedding dinner. Give guests photo ideas that feel emotional and candid.",
-  "This is a company celebration. Create prompts that capture team spirit and fun interactions."
+  "This is a relaxed wedding dinner. Give guests little moments to look for so the night feels candid and personal.",
+  "This is a baby birthday at home. Suggest warm, funny moments that feel natural rather than staged.",
+  "This is an engagement lunch in the garden. Create a photo roll that feels intimate, joyful, and easy to follow."
 ];
+
+const weddingHostPrompt = hostPromptExamples[0];
 
 export const defaultCreateImageUrl =
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80";
@@ -41,7 +43,7 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
     id: "host-demo-seed-wedding",
     role: "hosting",
     title: "Candlelight Wedding Dinner",
-    hostPrompt: hostPromptExamples[1],
+    hostPrompt: weddingHostPrompt,
     imageUrl:
       "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
     participantPreviewNames: ["Ethan", "Luca", "Grace", "Sophie", "Noah", "Ivy"],
@@ -222,7 +224,7 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
 
 export const defaultHostDemoDraftState: HostDemoDraftState = {
   title: "",
-  hostPrompt: hostPromptExamples[1],
+  hostPrompt: weddingHostPrompt,
   imageUrl: defaultCreateImageUrl,
   startAt: "",
   endAt: "",

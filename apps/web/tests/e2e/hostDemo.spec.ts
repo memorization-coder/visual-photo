@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const STORAGE_KEY = "visual-photo-host-demo-state";
+const STORAGE_VERSION = 2;
 const TINY_PNG_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wn0K4sAAAAASUVORK5CYII=";
 const TINY_PNG_DATA_URL = `data:image/png;base64,${TINY_PNG_BASE64}`;
 
@@ -81,12 +82,13 @@ const seedEvents = [
 ] as const;
 
 test.describe("host demo flow", () => {
-  test("opens the create route with a valid settings draft", async ({ page }) => {
+  test("opens the create route on the first camera setup step", async ({ page }) => {
     await page.addInitScript(
-      ({ storageKey, events, imageUrl }) => {
+      ({ storageKey, version, events, imageUrl }) => {
         window.sessionStorage.setItem(
           storageKey,
           JSON.stringify({
+            version,
             events,
             drafts: {
               create: {
@@ -113,46 +115,46 @@ test.describe("host demo flow", () => {
           })
         );
       },
-      { storageKey: STORAGE_KEY, events: seedEvents, imageUrl: TINY_PNG_DATA_URL }
+      { storageKey: STORAGE_KEY, version: STORAGE_VERSION, events: seedEvents, imageUrl: TINY_PNG_DATA_URL }
     );
 
     await page.goto("/en/host/events/demo");
-    await expect(page.getByRole("link", { name: "New Event" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "New Event" })).toBeVisible();
 
-    await page.getByRole("link", { name: "New Event" }).click();
+    await page.getByRole("button", { name: "New Event" }).click();
     await expect(page.getByTestId("host-demo-editor-create")).toBeVisible();
     await expect(page.getByTestId("host-demo-close")).toBeVisible();
-    await expect(page.getByTestId("host-demo-start-at")).toHaveValue("2026-06-15T14:00");
-    await expect(page.getByTestId("host-demo-end-at")).toHaveValue("2026-06-15T17:00");
-    await expect(page.getByTestId("host-demo-final-submit")).toContainText("Create Event");
+    await expect(page.getByTestId("host-demo-prompt-input")).toBeVisible();
+    await expect(page.getByTestId("host-demo-generate-ideas")).toContainText("Create Photo Roll");
   });
 
-  test("shows the upgrade card when paid settings are selected while editing", async ({ page }) => {
+  test("shows the premium guest pack modal when paid settings are selected while editing", async ({ page }) => {
     await page.addInitScript(
-      ({ storageKey, events }) => {
+      ({ storageKey, version, events }) => {
         window.sessionStorage.setItem(
           storageKey,
           JSON.stringify({
+            version,
             events,
             drafts: {
-              "edit:host-demo-seed-birthday": {
-                title: "Little Moments Together",
-                hostPrompt: "This is my baby's first birthday. Help guests capture warm, funny little moments.",
+              "edit:host-demo-seed-wedding": {
+                title: "Candlelight Wedding Dinner",
+                hostPrompt: "This is a relaxed wedding dinner. Give guests photo ideas that feel emotional and candid.",
                 imageUrl:
-                  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
-                startAt: "2026-06-15T14:00",
-                endAt: "2026-06-15T17:00",
-                revealMode: "during",
+                  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+                startAt: "2026-07-02T18:30",
+                endAt: "2026-07-02T23:00",
+                revealMode: "after",
                 revealDelayHours: 12,
                 allowGuestGalleryView: true,
                 guestCapacityLimit: 30,
                 eventTier: "small",
                 missions: [
-                  { id: "seed-birthday-1", prompt: "A tiny detail people may forget later", aiGenerated: true },
-                  { id: "seed-birthday-2", prompt: "A moment that feels like laughter", aiGenerated: true },
-                  { id: "seed-birthday-3", prompt: "Someone making the baby feel loved", aiGenerated: true },
-                  { id: "seed-birthday-4", prompt: "Something the host might miss", aiGenerated: true },
-                  { id: "seed-birthday-5", prompt: "A quiet happy moment", aiGenerated: true }
+                  { id: "seed-wedding-1", prompt: "Someone laughing naturally", aiGenerated: true },
+                  { id: "seed-wedding-2", prompt: "A moment that feels like family", aiGenerated: true },
+                  { id: "seed-wedding-3", prompt: "A detail the hosts worked hard on", aiGenerated: true },
+                  { id: "seed-wedding-4", prompt: "Someone dancing like nobody's watching", aiGenerated: true },
+                  { id: "seed-wedding-5", prompt: "A happy reaction during the event", aiGenerated: true }
                 ],
                 currentStep: 2
               }
@@ -160,35 +162,36 @@ test.describe("host demo flow", () => {
           })
         );
       },
-      { storageKey: STORAGE_KEY, events: seedEvents }
+      { storageKey: STORAGE_KEY, version: STORAGE_VERSION, events: seedEvents }
     );
 
-    await page.goto("/en/host/events/demo/host-demo-seed-birthday");
+    await page.goto("/en/host/events/demo/host-demo-seed-wedding");
     await expect(page.getByTestId("host-demo-editor-edit")).toBeVisible();
-    await expect(page.getByTestId("host-demo-tier-select")).toBeVisible();
-
-    await expect(page.getByTestId("host-demo-upgrade-card")).toBeVisible();
-    await expect(page.getByTestId("host-demo-final-submit")).toContainText("Continue To Upgrade");
+    await expect(page.getByText("Guest invited")).toBeVisible();
+    await page.getByRole("button", { name: "+10 guests" }).click();
+    await expect(page.getByTestId("host-demo-final-submit")).toContainText("Update Camera");
+    await page.getByTestId("host-demo-final-submit").click();
+    await expect(page.getByRole("heading", { name: "Premium guest pack" })).toBeVisible();
   });
 
   test("opens a share surface for a seeded event", async ({ page }) => {
     await page.addInitScript(
-      ({ storageKey, events }) => {
+      ({ storageKey, version, events }) => {
         window.sessionStorage.setItem(
           storageKey,
           JSON.stringify({
+            version,
             events,
             drafts: {}
           })
         );
       },
-      { storageKey: STORAGE_KEY, events: seedEvents }
+      { storageKey: STORAGE_KEY, version: STORAGE_VERSION, events: seedEvents }
     );
 
-    await page.goto("/en/host/events/demo");
-    await page.locator('a[href="/en/host/events/demo/host-demo-seed-birthday/share"]').click();
+    await page.goto("/en/host/events/demo/host-demo-seed-wedding/share");
 
-    await expect(page.getByRole("heading", { name: "Little Moments Together" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Copy Guest Link" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Share camera" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Copy invite link" })).toBeVisible();
   });
 });

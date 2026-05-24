@@ -8,7 +8,7 @@ describe("host demo logic", () => {
 
     expect(generated.title).toBe("Candlelight Wedding Dinner");
     expect(generated.missions).toHaveLength(5);
-    expect(generated.missions[0]?.prompt).toContain("candid");
+    expect(generated.missions[0]?.prompt).toBe("Someone laughing naturally");
   });
 
   it("identifies paid selections when tier or capacity exceed free defaults", () => {

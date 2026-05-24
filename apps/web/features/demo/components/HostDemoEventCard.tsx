@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import clsx from "clsx";
 import { Button, Stack, Text } from "@/components/primitives";
 import { buildEventPath, buildEventWallPath, buildHostDemoEditPath, buildHostDemoSharePath } from "@/lib/routes";
 import { demoEventSlug } from "../demoData";
-import { formatHostDemoDate, getHostDemoEventTimingState } from "../hostDemoLogic";
+import { getHostDemoEventTimingState } from "../hostDemoLogic";
 import type { HostDemoEvent } from "../hostDemoTypes";
 import { CameraIcon, GalleryIcon, ShareIcon } from "./HostDemoIcons";
 import { SurfaceCard } from "./shared";
@@ -14,9 +15,37 @@ import { SurfaceCard } from "./shared";
 type HostDemoEventCardProps = {
   event: HostDemoEvent;
   locale: string;
+  variant?: "hero" | "supporting";
 };
 
-export function HostDemoEventCard({ event, locale }: HostDemoEventCardProps) {
+function formatEventDay(dateTime: string) {
+  const parsed = new Date(dateTime);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return dateTime;
+  }
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  }).format(parsed);
+}
+
+function formatEventTime(dateTime: string) {
+  const parsed = new Date(dateTime);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return dateTime;
+  }
+
+  return new Intl.DateTimeFormat("en", {
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(parsed);
+}
+
+export function HostDemoEventCard({ event, locale, variant = "supporting" }: HostDemoEventCardProps) {
   const t = useTranslations("demo.host");
   const router = useRouter();
   const [notice, setNotice] = useState<string | null>(null);
@@ -71,32 +100,116 @@ export function HostDemoEventCard({ event, locale }: HostDemoEventCardProps) {
 
   function renderEventSummary() {
     return (
-      <Stack gap="xs">
-        <Text as="p" variant="bodyLg" className="font-semibold">
+        <Stack gap="sm">
+          {variant === "hero" ? (
+            <Text
+              as="p"
+              variant="labelSm"
+              className="[font-family:'Bradley_Hand',_'Segoe_Script',cursive] text-[1.12rem] normal-case tracking-normal !text-[var(--color-accent)]"
+            >
+              {t("eventCardEyebrow")}
+            </Text>
+          ) : null}
+        <Text
+          as="p"
+          variant="bodyLg"
+          className={clsx(
+            "font-semibold [font-family:Georgia,_Times_New_Roman,_serif]",
+            variant === "hero" ? "max-w-[11ch] text-[clamp(1.55rem,3.35vw,2.45rem)] leading-[0.96] !text-[#34231d]" : "text-[1.12rem] leading-[1.08] !text-[#fff3e6]"
+          )}
+        >
           {event.title}
         </Text>
-        <Text tone="muted">{formatHostDemoDate(event.endAt)}</Text>
-        <Text tone="muted">
-          {t("guestCountSummary", {
-            invited: event.invitedGuestCount,
-            limit: event.guestCapacityLimit
-          })}
-        </Text>
+        <div className={clsx("space-y-xs", variant === "hero" && "pt-xs")}>
+          <Text tone="muted" className={clsx(variant === "hero" ? "text-base !text-[#73584b]" : "!text-[#f0d9c7]")}>
+            {formatEventDay(event.startAt)}
+          </Text>
+          <Text tone="muted" className={clsx(variant === "hero" ? "text-base !text-[#73584b]" : "!text-[#f0d9c7]")}>
+            {formatEventTime(event.startAt)}
+          </Text>
+          {variant === "hero" ? (
+            <Text tone="muted" className="text-base !text-[#73584b]">
+              {t("guestCountSummary", {
+                invited: event.invitedGuestCount,
+                limit: event.guestCapacityLimit
+              })}
+            </Text>
+          ) : null}
+        </div>
       </Stack>
     );
   }
 
   return (
-    <SurfaceCard className="overflow-hidden p-0" data-testid={`host-event-card-${event.id}`}>
-      <button
-        type="button"
-        onClick={handleImageTap}
-        className="block w-full text-left focus-visible:outline-none"
-        data-testid={`host-event-edit-link-${event.id}`}
+    <SurfaceCard
+      className={clsx(
+        "overflow-hidden border-[var(--color-border-strong)] p-0 shadow-card",
+        variant === "hero" &&
+          "rounded-[2.2rem] border-[rgba(243,231,216,0.08)] bg-[linear-gradient(180deg,rgba(250,244,235,0.98)_0%,rgba(240,229,212,0.95)_100%)]",
+        variant === "supporting" && "rounded-[1.75rem] border-[rgba(232,203,177,0.14)] bg-[linear-gradient(180deg,rgba(74,53,43,0.96)_0%,rgba(58,42,35,0.98)_100%)]"
+      )}
+      data-testid={`host-event-card-${event.id}`}
+    >
+      <div
+        className={clsx(
+          "grid gap-lg p-lg",
+          variant === "hero" ? "relative md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.02fr)] md:gap-md md:p-[1.2rem]" : "grid-cols-[8.2rem_minmax(0,1fr)] items-start gap-md px-md py-md"
+        )}
       >
-        <img src={event.imageUrl} alt={event.title} className="aspect-[4/3] w-full object-cover" />
-      </button>
-      <div className="space-y-md p-lg">
+        {variant === "hero" ? (
+          <img
+            src="/demo/disposable-camera/stamp-ring.svg"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute right-6 top-8 hidden w-28 opacity-[0.16] md:block"
+          />
+        ) : null}
+        <button
+          type="button"
+          onClick={handleImageTap}
+          className="block w-full text-left focus-visible:outline-none"
+          data-testid={`host-event-edit-link-${event.id}`}
+        >
+          <div
+            className={clsx(
+              "overflow-hidden",
+              variant === "hero" ? "relative min-h-[19.8rem] rounded-[1.6rem]" : "rounded-[1.18rem]"
+            )}
+          >
+            {variant === "hero" ? (
+              <div className="relative flex min-h-[18.4rem] items-start justify-center py-[0.15rem] md:justify-start">
+                <div className="relative mt-1 h-[17.4rem] w-[13.2rem] rotate-[-3deg]">
+                  <div className="absolute inset-[4%] z-10 rounded-[1.35rem] bg-[linear-gradient(180deg,#f8efe3_0%,#ecdfcb_100%)] shadow-[0_20px_36px_rgba(76,54,43,0.18),inset_0_1px_0_rgba(255,255,255,0.38)]" />
+                  <img
+                    src="/demo/disposable-camera/tape-strip.webp"
+                    alt=""
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[-0.45rem] top-[-0.25rem] z-20 w-24 rotate-[-14deg] opacity-85"
+                  />
+                  <div className="absolute inset-[4%] z-20 rounded-[1.35rem]">
+                    <div className="absolute inset-x-[12%] top-[10.5%] bottom-[23%] overflow-hidden rounded-[0.9rem] bg-[#d9cbb8] shadow-[inset_0_0_0_1px_rgba(122,96,79,0.08),0_18px_28px_rgba(88,62,49,0.14)]">
+                      <img
+                        src={event.imageUrl}
+                        alt={event.title}
+                        className="h-full w-full object-cover [filter:sepia(0.08)_saturate(0.88)_brightness(0.97)_contrast(1.03)]"
+                      />
+                    </div>
+                  </div>
+                  <div className="pointer-events-none absolute inset-[4%] z-30 rounded-[1.35rem] shadow-[inset_0_0_0_1px_rgba(196,171,144,0.82)]" />
+                  <div className="pointer-events-none absolute inset-x-[16.5%] bottom-[10.5%] top-[71.5%] z-30 rounded-b-[0.85rem] bg-[linear-gradient(180deg,rgba(239,227,208,0.02)_0%,rgba(228,214,194,0.18)_100%)]" />
+                  <div className="pointer-events-none absolute left-[16.5%] right-[16.5%] top-[10.5%] z-30 h-[0.08rem] bg-[rgba(255,255,255,0.38)]" />
+                </div>
+              </div>
+            ) : (
+              <img
+                src={event.imageUrl}
+                alt={event.title}
+                className="h-full min-h-[8.2rem] w-full object-cover aspect-[4/3] [filter:sepia(0.08)_saturate(0.9)_brightness(0.98)_contrast(1.02)]"
+              />
+            )}
+          </div>
+        </button>
+        <div className={clsx("space-y-md", variant === "hero" ? "self-center text-[#34231d] md:pr-sm" : "flex min-h-[8.2rem] flex-col justify-between text-[#fff3e6]")}>
         {notice ? (
           <div className="flex items-start justify-between gap-sm rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)] px-md py-sm">
             <Text as="p" className="text-sm">
@@ -124,12 +237,16 @@ export function HostDemoEventCard({ event, locale }: HostDemoEventCardProps) {
         ) : (
           renderEventSummary()
         )}
-        <div className="flex flex-col gap-sm">
+        <div className={clsx("gap-sm", variant === "hero" ? "flex flex-col" : "grid grid-cols-2")}>
           <Button
             onClick={() => router.push(primaryHref)}
-            variant="outlined"
+            variant="filled"
             size="sm"
-            className="justify-center gap-sm"
+            className={clsx(
+              "justify-center gap-sm",
+              variant === "hero" && "min-h-[3.1rem] rounded-[1rem] border-0 bg-[linear-gradient(180deg,#4d3329_0%,#34231d_100%)] !text-[#fff8f0] shadow-[0_10px_20px_rgba(52,35,29,0.16)]",
+              variant === "supporting" && "min-h-[2.65rem] rounded-full border-0 bg-[#ef9467] px-md text-sm !text-[#fffaf4] shadow-none"
+            )}
             data-testid={`host-event-guest-link-${event.id}`}
           >
             <PrimaryIcon />
@@ -137,14 +254,21 @@ export function HostDemoEventCard({ event, locale }: HostDemoEventCardProps) {
           </Button>
           <Button
             onClick={() => router.push(buildHostDemoSharePath(locale, event.id))}
-            variant="muted"
+            variant="outlined"
             size="sm"
-            className="justify-center gap-sm"
+            className={clsx(
+              "justify-center gap-sm",
+              variant === "hero" &&
+                "min-h-[3.1rem] rounded-[1rem] border-[rgba(77,51,41,0.12)] bg-[rgba(255,250,245,0.82)] !text-[#34231d]",
+              variant === "supporting" &&
+                "min-h-[2.65rem] rounded-full border-[rgba(240,217,199,0.18)] bg-transparent px-md text-sm !text-[#fff3e6]"
+            )}
             data-testid={`host-event-share-link-${event.id}`}
           >
             <ShareIcon />
             {t("shareEventAction")}
           </Button>
+        </div>
         </div>
       </div>
     </SurfaceCard>

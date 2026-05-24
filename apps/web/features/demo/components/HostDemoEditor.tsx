@@ -301,6 +301,18 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
     );
   }
 
+  function renderStepIntro(eyebrow: string, title: string, body: string) {
+    return (
+      <div className="space-y-xs">
+        <Text as="p" variant="labelSm" tone="muted" className="tracking-[0.2em]">
+          {eyebrow}
+        </Text>
+        <Heading level={3}>{title}</Heading>
+        <Text tone="muted">{body}</Text>
+      </div>
+    );
+  }
+
   function renderMissionsEditor() {
     return (
       <>
@@ -325,7 +337,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                 setDraggedMissionIndex(null);
               }}
               onDragEnd={() => setDraggedMissionIndex(null)}
-              className="rounded-2xl border border-[var(--color-border)] bg-surface-muted p-md"
+            className="rounded-[1.5rem] border border-[var(--color-border)] bg-[var(--color-surface-emphasis)] p-md shadow-card"
               data-testid={`host-demo-mission-${index + 1}`}
             >
               <div className="mb-sm flex items-center justify-between gap-sm">
@@ -341,11 +353,12 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
                   x
                 </button>
               </div>
-              <input
+              <textarea
                 value={mission.prompt}
                 onChange={(eventInput) => updateMission(index, eventInput.target.value)}
                 data-testid={`host-demo-mission-input-${index + 1}`}
-                className="w-full rounded-xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary"
+                rows={3}
+                className="w-full resize-none rounded-xl border border-[var(--color-border-strong)] bg-surface px-md py-md text-sm text-text-primary"
               />
             </div>
           ))}
@@ -659,6 +672,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
         {formState.currentStep === 0 ? (
           <SurfaceCard className="space-y-lg">
             <div className="flex justify-end">{renderCloseButton()}</div>
+            {renderStepIntro(t("createEyebrow"), t("createTitle"), t("createBody"))}
             <label className="block cursor-pointer overflow-hidden rounded-[1.75rem] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)]">
               {formState.imageUrl ? (
                 <img src={formState.imageUrl} alt={t("imagePreviewAlt")} className="aspect-[4/3] w-full object-cover" />
@@ -677,6 +691,9 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
             </label>
 
             <div className="space-y-sm">
+              <Text as="label" variant="labelMd">
+                {t("promptLabel")}
+              </Text>
               <textarea
                 value={formState.hostPrompt}
                 onChange={(eventInput) => updateDraft({ hostPrompt: eventInput.target.value })}
@@ -717,6 +734,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
         {formState.currentStep === 1 ? (
           <SurfaceCard className="space-y-lg">
             <div className="flex justify-end">{renderCloseButton()}</div>
+            {renderStepIntro(t("generatedMomentsTitle"), t("momentsTitle"), t("momentsBody"))}
             <div className="space-y-sm">
               <input
                 value={formState.title}
@@ -739,6 +757,7 @@ export function HostDemoEditor({ locale, mode, eventId }: HostDemoEditorProps) {
         {formState.currentStep === 2 ? (
           <SurfaceCard className="space-y-lg">
             <div className="flex justify-end">{renderCloseButton()}</div>
+            {renderStepIntro(t("settingsTitle"), t("revealLabel"), t("settingsBody"))}
             {renderSettingsFields()}
             {scheduleError ? <Text tone="error">{scheduleError}</Text> : null}
             <div className="flex justify-end">

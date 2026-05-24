@@ -72,7 +72,7 @@ export function DemoPreviewPage({ locale, missionId }: DemoPreviewPageProps) {
         <div className="grid grid-cols-1 gap-sm">
           <Link
             href={buildEventCapturePath(locale, demoEventSlug, currentMission.id)}
-            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[#d7c7b8] bg-surface px-lg py-sm text-sm font-medium text-text-primary transition hover:bg-surface-muted"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-border-strong)] bg-surface px-lg py-sm text-sm font-medium text-text-primary transition hover:bg-surface-muted"
           >
             {t("retake")}
           </Link>

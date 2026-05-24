@@ -70,8 +70,9 @@ describe("demo prototype selectors", () => {
   it("sorts loved moments by updated local love count", () => {
     const ranked = buildLovedMoments(demoSeedMemories, [demoSeedMemories[0].id]);
     expect(ranked[0]?.id).toBe(demoSeedMemories[1].id);
-    expect(ranked[1]?.id).toBe(demoSeedMemories[0].id);
-    expect(ranked[1]?.loveCount).toBe(demoSeedMemories[0].loveCount + 1);
+    expect(ranked[1]?.id).toBe(demoSeedMemories[4].id);
+    expect(ranked[2]?.id).toBe(demoSeedMemories[0].id);
+    expect(ranked[2]?.loveCount).toBe(demoSeedMemories[0].loveCount + 1);
   });
 
   it("classifies orientation buckets from width and height", () => {
@@ -95,7 +96,7 @@ describe("demo prototype selectors", () => {
   it("filters wall memories by mission", () => {
     expect(filterMemoriesByMission(demoSeedMemories).length).toBe(demoSeedMemories.length);
     expect(filterMemoriesByMission(demoSeedMemories, demoMissions[1].id).map((memory) => memory.id)).toEqual([
-      demoSeedMemories[0].id
+      demoSeedMemories[1].id
     ]);
     expect(filterMemoriesByMission(demoSeedMemories, "missing")).toEqual([]);
   });
