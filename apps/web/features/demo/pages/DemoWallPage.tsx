@@ -7,7 +7,6 @@ import { useDemoEventPrototype } from "../DemoEventPrototypeProvider";
 import { filterMemoriesByMission, findMemoryById, sortMissions } from "../demoSelectors";
 import { MemoryLightbox } from "../components/MemoryLightbox";
 import { MemoryWallGrid } from "../components/MemoryWallGrid";
-import { SurfaceCard } from "../components/shared";
 
 export function DemoWallPage() {
   const t = useTranslations("demo.wall");
@@ -38,23 +37,20 @@ export function DemoWallPage() {
 
   return (
     <>
-      <div className="space-y-md">
-        <section className="space-y-sm">
-          <SurfaceCard className="space-y-md">
-            <div className="flex items-center justify-between gap-md rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-emphasis)] px-md py-md">
+      <div className="space-y-lg">
+        <section className="relative overflow-hidden rounded-[2.85rem] border border-[rgba(236,213,186,0.16)] bg-[#17110f] px-lg py-lg shadow-[0_30px_72px_rgba(0,0,0,0.34)]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,229,202,0.08),transparent_34%)]" />
+          <div className="relative space-y-md">
+            <div className="flex items-center justify-between gap-md rounded-[2rem] border border-[rgba(236,213,186,0.12)] bg-[rgba(255,250,245,0.08)] px-md py-md">
               <Stack gap="xs" className="min-w-0">
-                <Text as="p" variant="labelSm" tone="muted">
-                  {t("summaryLabel")}
+                <Text as="p" variant="labelSm" className="tracking-[0.16em] !text-[#f0d9c7]">
+                  {t("filterLabel")}
                 </Text>
-                <Text as="p" variant="bodyLg">
-                  {selectedFilterMission
-                    ? t("filteredVisibleCount", { count: filteredMemories.length })
-                    : t("visibleCount", { count: allMemories.length })}
+                <Text as="p" className="min-w-0 truncate !text-[#fff3e6]">
+                  {selectedFilterMission?.prompt ?? t("allMissions")}
                 </Text>
-                <Text tone="muted">
-                  {selectedFilterMission
-                    ? t("filteredMomentsDescription", { mission: selectedFilterMission.prompt })
-                    : t("allMomentsDescription")}
+                <Text className="!text-[#d8bea8]">
+                  {selectedFilterMission ? t("filteredVisibleCount", { count: filteredMemories.length }) : t("visibleCount", { count: allMemories.length })}
                 </Text>
               </Stack>
               <div className="relative h-14 w-20 shrink-0">
@@ -69,16 +65,17 @@ export function DemoWallPage() {
                 ))}
               </div>
             </div>
+
             <div className="flex items-center justify-between gap-sm">
-              <Stack gap="xs" className="min-w-0">
-                <Text as="p" variant="labelSm" tone="muted">
-                  {t("filterLabel")}
-                </Text>
-                <Text as="p" className="min-w-0 truncate">
-                  {selectedFilterMission?.prompt ?? t("allMissions")}
-                </Text>
-              </Stack>
-              <Button variant="outlined" size="sm" onClick={() => setShowFilters((current) => !current)}>
+              <Heading level={4} className="[font-family:Georgia,_Times_New_Roman,_serif] !text-[#fff3e6]">
+                {selectedFilterMission ? t("filterLabel") : t("allMissions")}
+              </Heading>
+              <Button
+                variant="outlined"
+                size="sm"
+                onClick={() => setShowFilters((current) => !current)}
+                className="rounded-full !border-[rgba(255,243,231,0.18)] !bg-[rgba(255,243,231,0.06)] !text-[#fff3e6] hover:!bg-[rgba(255,243,231,0.12)]"
+              >
                 {showFilters ? t("hideFilters") : t("showFilters")}
               </Button>
             </div>
@@ -89,6 +86,7 @@ export function DemoWallPage() {
                   variant={selectedMissionId ? "ghost" : "filled"}
                   size="sm"
                   onClick={() => handleSelectMissionFilter(undefined)}
+                  className={selectedMissionId ? "rounded-full !border-[rgba(255,243,231,0.18)] !bg-[rgba(255,243,231,0.06)] !text-[#fff3e6]" : "rounded-full border-0 !bg-[#fff3e6] !text-[#2f211b]"}
                 >
                   {t("allMissions")}
                 </Button>
@@ -98,6 +96,7 @@ export function DemoWallPage() {
                     variant={selectedMissionId === mission.id ? "filled" : "ghost"}
                     size="sm"
                     onClick={() => handleSelectMissionFilter(mission.id)}
+                    className={selectedMissionId === mission.id ? "rounded-full border-0 !bg-[#fff3e6] !text-[#2f211b]" : "rounded-full !border-[rgba(255,243,231,0.18)] !bg-[rgba(255,243,231,0.06)] !text-[#fff3e6]"}
                   >
                     {t("missionChip", { current: mission.missionOrder + 1 })}
                   </Button>
@@ -105,7 +104,7 @@ export function DemoWallPage() {
               </div>
             ) : null}
 
-            {filteredMemories.length === 0 ? <Text tone="muted">{t("emptyMissionFilter")}</Text> : null}
+            {filteredMemories.length === 0 ? <Text className="!text-[#d8bea8]">{t("emptyMissionFilter")}</Text> : null}
 
             <MemoryWallGrid
               memories={filteredMemories}
@@ -113,7 +112,7 @@ export function DemoWallPage() {
               getLoveCount={getMemoryLoveCount}
               onSelectMemory={setSelectedMemoryId}
             />
-          </SurfaceCard>
+          </div>
         </section>
       </div>
       {selectedMemory ? (

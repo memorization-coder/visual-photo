@@ -45,6 +45,10 @@ function formatEventTime(dateTime: string) {
   }).format(parsed);
 }
 
+function formatEventDateTime(dateTime: string) {
+  return `${formatEventDay(dateTime)}, ${formatEventTime(dateTime)}`;
+}
+
 export function HostDemoEventCard({ event, locale, variant = "supporting" }: HostDemoEventCardProps) {
   const t = useTranslations("demo.host");
   const router = useRouter();
@@ -100,32 +104,31 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
 
   function renderEventSummary() {
     return (
-        <Stack gap="sm">
-          {variant === "hero" ? (
-            <Text
-              as="p"
-              variant="labelSm"
-              className="[font-family:'Bradley_Hand',_'Segoe_Script',cursive] text-[1.12rem] normal-case tracking-normal !text-[var(--color-accent)]"
-            >
-              {t("eventCardEyebrow")}
-            </Text>
-          ) : null}
+      <Stack gap="sm">
+        {variant === "hero" ? (
+          <Text
+            as="p"
+            variant="labelSm"
+            className="[font-family:'Bradley_Hand',_'Segoe_Script',cursive] text-[1.36rem] normal-case tracking-normal !text-[var(--color-accent)]"
+          >
+            {t("eventCardEyebrow")}
+          </Text>
+        ) : null}
         <Text
           as="p"
           variant="bodyLg"
           className={clsx(
             "font-semibold [font-family:Georgia,_Times_New_Roman,_serif]",
-            variant === "hero" ? "max-w-[11ch] text-[clamp(1.55rem,3.35vw,2.45rem)] leading-[0.96] !text-[#34231d]" : "text-[1.12rem] leading-[1.08] !text-[#fff3e6]"
+            variant === "hero"
+              ? "max-w-[11ch] text-[clamp(1.55rem,3.35vw,2.45rem)] leading-[0.96] !text-[#34231d]"
+              : "max-w-full text-[1.12rem] leading-[1.08] break-words !text-[#fff3e6]"
           )}
         >
           {event.title}
         </Text>
         <div className={clsx("space-y-xs", variant === "hero" && "pt-xs")}>
           <Text tone="muted" className={clsx(variant === "hero" ? "text-base !text-[#73584b]" : "!text-[#f0d9c7]")}>
-            {formatEventDay(event.startAt)}
-          </Text>
-          <Text tone="muted" className={clsx(variant === "hero" ? "text-base !text-[#73584b]" : "!text-[#f0d9c7]")}>
-            {formatEventTime(event.startAt)}
+            {variant === "hero" ? formatEventDay(event.startAt) : formatEventDateTime(event.startAt)}
           </Text>
           {variant === "hero" ? (
             <Text tone="muted" className="text-base !text-[#73584b]">
@@ -153,7 +156,9 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
       <div
         className={clsx(
           "grid gap-lg p-lg",
-          variant === "hero" ? "relative md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.02fr)] md:gap-md md:p-[1.2rem]" : "grid-cols-[8.2rem_minmax(0,1fr)] items-start gap-md px-md py-md"
+          variant === "hero"
+            ? "relative md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.02fr)] md:gap-md md:p-[1.2rem]"
+            : "grid-cols-1 gap-md px-md py-md"
         )}
       >
         {variant === "hero" ? (
@@ -184,7 +189,7 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
                     src="/demo/disposable-camera/tape-strip.webp"
                     alt=""
                     aria-hidden="true"
-                    className="pointer-events-none absolute left-[-0.45rem] top-[-0.25rem] z-20 w-24 rotate-[-14deg] opacity-85"
+                    className="pointer-events-none absolute left-[0.15rem] top-[0.15rem] z-20 w-16 rotate-[-18deg] opacity-88"
                   />
                   <div className="absolute inset-[4%] z-20 rounded-[1.35rem]">
                     <div className="absolute inset-x-[12%] top-[10.5%] bottom-[23%] overflow-hidden rounded-[0.9rem] bg-[#d9cbb8] shadow-[inset_0_0_0_1px_rgba(122,96,79,0.08),0_18px_28px_rgba(88,62,49,0.14)]">
@@ -204,12 +209,17 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
               <img
                 src={event.imageUrl}
                 alt={event.title}
-                className="h-full min-h-[8.2rem] w-full object-cover aspect-[4/3] [filter:sepia(0.08)_saturate(0.9)_brightness(0.98)_contrast(1.02)]"
+                className="aspect-[4/3] h-full min-h-[10.5rem] w-full rounded-[1.18rem] object-cover [filter:sepia(0.08)_saturate(0.9)_brightness(0.98)_contrast(1.02)]"
               />
             )}
           </div>
         </button>
-        <div className={clsx("space-y-md", variant === "hero" ? "self-center text-[#34231d] md:pr-sm" : "flex min-h-[8.2rem] flex-col justify-between text-[#fff3e6]")}>
+        <div
+          className={clsx(
+            "space-y-md",
+            variant === "hero" ? "self-center text-[#34231d] md:pr-sm" : "min-w-0 text-[#fff3e6]"
+          )}
+        >
         {notice ? (
           <div className="flex items-start justify-between gap-sm rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface-emphasis)] px-md py-sm">
             <Text as="p" className="text-sm">
@@ -237,7 +247,7 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
         ) : (
           renderEventSummary()
         )}
-        <div className={clsx("gap-sm", variant === "hero" ? "flex flex-col" : "grid grid-cols-2")}>
+        <div className="flex flex-col gap-sm">
           <Button
             onClick={() => router.push(primaryHref)}
             variant="filled"
@@ -245,7 +255,7 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
             className={clsx(
               "justify-center gap-sm",
               variant === "hero" && "min-h-[3.1rem] rounded-[1rem] border-0 bg-[linear-gradient(180deg,#4d3329_0%,#34231d_100%)] !text-[#fff8f0] shadow-[0_10px_20px_rgba(52,35,29,0.16)]",
-              variant === "supporting" && "min-h-[2.65rem] rounded-full border-0 bg-[#ef9467] px-md text-sm !text-[#fffaf4] shadow-none"
+              variant === "supporting" && "min-h-[2.65rem] w-full rounded-full border-0 bg-[#ef9467] px-md text-sm !text-[#fffaf4] shadow-none"
             )}
             data-testid={`host-event-guest-link-${event.id}`}
           >
@@ -259,9 +269,9 @@ export function HostDemoEventCard({ event, locale, variant = "supporting" }: Hos
             className={clsx(
               "justify-center gap-sm",
               variant === "hero" &&
-                "min-h-[3.1rem] rounded-[1rem] border-[rgba(77,51,41,0.12)] bg-[rgba(255,250,245,0.82)] !text-[#34231d]",
+                "min-h-[3.1rem] rounded-[1rem] !border-[rgba(77,51,41,0.12)] !bg-[rgba(255,250,245,0.82)] !text-[#34231d]",
               variant === "supporting" &&
-                "min-h-[2.65rem] rounded-full border-[rgba(240,217,199,0.18)] bg-transparent px-md text-sm !text-[#fff3e6]"
+                "min-h-[2.65rem] w-full rounded-full !border-[rgba(240,217,199,0.18)] !bg-transparent px-md text-sm !text-[#fff3e6]"
             )}
             data-testid={`host-event-share-link-${event.id}`}
           >

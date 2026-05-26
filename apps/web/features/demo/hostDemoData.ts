@@ -1,9 +1,37 @@
 import type { HostDemoDraftState, HostDemoEvent } from "./hostDemoTypes";
 
+function formatDateTimeLocal(date: Date): string {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  const hours = `${date.getHours()}`.padStart(2, "0");
+  const minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function createDefaultSchedule() {
+  const base = new Date();
+  base.setSeconds(0, 0);
+  base.setMinutes(0);
+  base.setHours(base.getHours() + 1);
+
+  const startAt = new Date(base);
+  startAt.setDate(startAt.getDate() + 7);
+
+  const endAt = new Date(base);
+  endAt.setDate(endAt.getDate() + 21);
+
+  return {
+    startAt: formatDateTimeLocal(startAt),
+    endAt: formatDateTimeLocal(endAt)
+  };
+}
+
 export const hostPromptExamples = [
-  "This is a relaxed wedding dinner. Give guests little moments to look for so the night feels candid and personal.",
-  "This is a baby birthday at home. Suggest warm, funny moments that feel natural rather than staged.",
-  "This is an engagement lunch in the garden. Create a photo roll that feels intimate, joyful, and easy to follow."
+  "Relaxed wedding dinner with candid, personal moments.",
+  "Baby birthday at home with warm, funny moments.",
+  "Garden engagement lunch with intimate, joyful moments."
 ];
 
 const weddingHostPrompt = hostPromptExamples[0];
@@ -222,17 +250,23 @@ export const hostDemoSeedEvents: HostDemoEvent[] = [
   }
 ];
 
-export const defaultHostDemoDraftState: HostDemoDraftState = {
-  title: "",
-  hostPrompt: weddingHostPrompt,
-  imageUrl: defaultCreateImageUrl,
-  startAt: "",
-  endAt: "",
-  revealMode: "during",
-  revealDelayHours: 12,
-  allowGuestGalleryView: true,
-  guestCapacityLimit: 5,
-  eventTier: "free",
-  missions: [],
-  currentStep: 0
-};
+export function createDefaultHostDemoDraftState(): HostDemoDraftState {
+  const schedule = createDefaultSchedule();
+
+  return {
+    title: "",
+    hostPrompt: weddingHostPrompt,
+    imageUrl: defaultCreateImageUrl,
+    startAt: schedule.startAt,
+    endAt: schedule.endAt,
+    revealMode: "during",
+    revealDelayHours: 12,
+    allowGuestGalleryView: true,
+    guestCapacityLimit: 5,
+    eventTier: "free",
+    missions: [],
+    currentStep: 0
+  };
+}
+
+export const defaultHostDemoDraftState: HostDemoDraftState = createDefaultHostDemoDraftState();

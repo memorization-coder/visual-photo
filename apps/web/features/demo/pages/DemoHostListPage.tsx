@@ -153,7 +153,7 @@ export function DemoHostListPage({ locale }: DemoHostListPageProps) {
               <Text
                 as="p"
                 variant="labelSm"
-                className="inline-block [font-family:'Bradley_Hand',_'Segoe_Script',cursive] text-[1.28rem] normal-case tracking-normal !text-[#f2caae] [text-shadow:0_2px_12px_rgba(0,0,0,0.58)]"
+                className="inline-block [font-family:'Bradley_Hand',_'Segoe_Script',cursive] text-[1.52rem] normal-case tracking-normal !text-[#f2caae] [text-shadow:0_2px_12px_rgba(0,0,0,0.58)]"
               >
                 {t("listGreeting", { name: "Paris" })}
               </Text>
